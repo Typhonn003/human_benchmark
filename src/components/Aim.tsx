@@ -67,11 +67,9 @@ export default function Aim() {
         cleanScreen(context);
 
         if (!circle.current) {
-          // Criar a instância da classe Circle se ainda não existir
           circle.current = new Circle(50, 50, 20, context);
         }
 
-        // Chamar a função draw da instância da classe Circle
         circle.current.draw();
       }
       requestAnimationFrame(animate);
@@ -83,15 +81,24 @@ export default function Aim() {
     if (canvas) {
       const context = canvas.getContext("2d");
       if (context && circle.current) {
-        // Chamar a função isInside da instância da classe Circle
         if (
           circle.current.isInside(
-            (e as MouseEvent).clientX,
-            (e as MouseEvent).clientY
+            (e as MouseEvent).offsetX,
+            (e as MouseEvent).offsetY
           )
         ) {
-          // Se a condição for verdadeira, mova o círculo
           circle.current.move();
+          score += 1;
+          const AudioClass =
+            typeof window !== "undefined" ? window.Audio : null;
+
+          let scoreSound = AudioClass ? new AudioClass("/sound.wav") : null;
+          scoreSound?.addEventListener("ended", () => {
+            scoreSound = null;
+          });
+          if (scoreSound) {
+            scoreSound.play();
+          }
         }
       }
     }
@@ -101,108 +108,20 @@ export default function Aim() {
     const canvas = canvasRef.current;
 
     if (canvas) {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.width = 500;
+      canvas.height = 500;
       animate();
 
-      // Adicionar o event listener para o clique no canvas
       canvas.addEventListener("click", handleCanvasClick);
     }
 
     return () => {
       const canvas = canvasRef.current;
       if (canvas) {
-        // Remover o event listener ao desmontar o componente
         canvas.removeEventListener("click", handleCanvasClick);
       }
     };
   }, []);
 
-  return <canvas ref={canvasRef} />;
+  return <canvas className="border-2 border-white" ref={canvasRef} />;
 }
-
-/*
-export default function Aim() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const player = { x: 50, y: 50 }
-
-  const cleanScreen = (context: CanvasRenderingContext2D) => {
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-  };
-
-  const drawMap = (context: CanvasRenderingContext2D) => {
-    const size = 50;
-    const map = [[1, 1, 1], [1, 0, 1], [1, 1, 1]];
-
-    for (let i = 0; i < map.length; i++) {
-      const row = map[i];
-      for (let j = 0; j < row.length; j++) {
-        const element = row[j];
-        if (element) {
-          context.fillStyle = 'white';
-        } else {
-          context.fillStyle = 'red';
-        }
-        context.fillRect(j * size, i * size, size, size);
-      }
-    }
-  };
-
-  const drawPlayer = (context: CanvasRenderingContext2D) => {
-    context.fillStyle = 'green';
-    context.fillRect(player.x, player.y, 20, 20);
-  }
-
-  const animate = () => {
-    const canvas = canvasRef.current;
-    if (canvas) {
-      const context = canvas.getContext('2d');
-      if (context) {
-        cleanScreen(context);
-        // drawMap(context);
-        drawPlayer(context);
-      }
-      requestAnimationFrame(animate);
-    }
-  };
-
-  const keyHandler = (e: KeyboardEvent) => {
-    switch (e.key) {
-      case 'ArrowUp':
-        player.y -= 5;
-        break;
-      case 'ArrowDown':
-        player.y += 5;
-        break;
-      case 'ArrowLeft':
-        player.x -= 5;
-        break;
-      case 'ArrowRight':
-        player.x += 5;
-        break;
-      default:
-        break;
-    }
-  };
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (canvas) {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      const context = canvas.getContext('2d');
-      if (context) {
-        animate();
-        window.addEventListener('keydown', keyHandler);
-      }
-    }
-
-    return () => {
-      window.removeEventListener('keydown', keyHandler);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} />;
-}
-
-*/
