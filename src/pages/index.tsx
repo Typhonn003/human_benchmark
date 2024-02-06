@@ -1,20 +1,41 @@
 import { Button } from "@/components/button/Button";
 
+import { InfoCard } from "@/components/info-card/InfoCard";
+
+import { FaClock } from "react-icons/fa";
+import { BsFillPeopleFill } from "react-icons/bs";
+import { FaBook } from "react-icons/fa";
+
 export default function Home() {
   return (
     <main>
-      <section className="min-h-screen bg-lime3">
-        <div className="container-width flex flex-col items-center gap-3">
+      <section className="flex min-h-screen items-center bg-lime3">
+        <div className="container-width flex flex-col items-center gap-5">
           <h1 className="text-4xl font-semibold">Human Benchmark</h1>
-          <div className="w-72 font-medium text-lime11">
-            <p className="text-xl">Se desafie.</p>
-            <p className="text-center text-xl">Aprimore suas habilidades.</p>
-            <p className="text-right text-xl">Supere seus limites.</p>
+          <div className="w-72 text-xl font-medium text-lime11">
+            <p>Se desafie.</p>
+            <p className="text-center">Aprimore suas habilidades.</p>
+            <p className="text-right">Supere seus limites.</p>
           </div>
           <div className="flex w-full justify-between">
             <Button>Iniciar</Button>
             <Button variant="borded">Ver resultados detalhados</Button>
           </div>
+          <InfoCard
+            icon={<FaClock />}
+            title="Titulo 1"
+            description="Lorem Ipsum is simply dummy text of the printing."
+          />
+          <InfoCard
+            icon={<BsFillPeopleFill />}
+            title="Titulo 2"
+            description="Lorem Ipsum is simply dummy text of the printing."
+          />
+          <InfoCard
+            icon={<FaBook />}
+            title="Titulo 3"
+            description="Lorem Ipsum is simply dummy text of the printing."
+          />
         </div>
       </section>
     </main>
