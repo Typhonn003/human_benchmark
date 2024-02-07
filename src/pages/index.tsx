@@ -46,7 +46,12 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="container-width gap6 flex min-h-screen flex-col gap-4">
+      <section className="container-width flex flex-col gap-4 pb-6 xl:grid xl:grid-cols-3">
+        <GameCard
+          icon={<FiTarget />}
+          title="Titulo do jogo"
+          description="Descrição do jogo"
+        />
         <GameCard
           icon={<FiTarget />}
           title="Titulo do jogo"
