@@ -1,4 +1,4 @@
-import { Button } from "@/components/button/Button";
+import { Button } from "@/components/ui/button";
 
 import { InfoCard } from "@/components/cards/infoCard";
 import { GameCard } from "@/components/cards/gameCard";
@@ -23,8 +23,10 @@ export default function Home() {
               <p className="text-right">Supere seus limites.</p>
             </div>
             <div className="md xs:flex-row xs: flex w-full flex-col justify-between gap-2 xl:justify-start xl:gap-6">
-              <Button>Iniciar</Button>
-              <Button variant="borded">Ver resultados detalhados</Button>
+              <Button size="lg">Iniciar</Button>
+              <Button size="lg" variant="outline">
+                Ver resultados detalhados
+              </Button>
             </div>
           </div>
           <div className="flex flex-col gap-4 xl:max-w-96">
