@@ -77,6 +77,6 @@
 
 @layer components {
   .container-width {
-    @apply mx-auto w-[90%];
+    @apply mx-auto w-[90%] xl:w-[60%];
   }
 }
