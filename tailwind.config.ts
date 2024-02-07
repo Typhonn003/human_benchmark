@@ -11,7 +11,6 @@ const config = {
   ],
   prefix: "",
   theme: {
-    colors: { ...lime },
     container: {
       center: true,
       padding: "2rem",
@@ -21,6 +20,7 @@ const config = {
     },
     extend: {
       colors: {
+        ...lime,
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -73,6 +73,9 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      screens: {
+        xs: "375px",
       },
     },
   },
