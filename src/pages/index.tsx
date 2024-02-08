@@ -12,24 +12,24 @@ export default function Home() {
   return (
     <main className="flex flex-col gap-6">
       <section className="flex min-h-screen items-center bg-lime3">
-        <div className="container-width flex flex-col items-center gap-5 xl:h-80 xl:flex-row xl:justify-between">
-          <div className="flex w-full flex-col items-center gap-4 xl:h-full xl:max-w-xl xl:items-start xl:justify-around">
-            <h1 className="text-center text-4xl font-semibold xl:text-6xl">
+        <div className="container-width tablet:flex-row tablet:max-w-full laptop:gap-20 desktop:gap-38 flex max-w-96 flex-col items-center gap-5">
+          <div className="tablet:w-2/4 laptop:items-start desktop:w-3/5 laptop:gap-8 flex w-full flex-col items-center gap-4">
+            <h1 className="laptop:text-5xl desktop:text-6xl text-center text-4xl font-semibold">
               Human Benchmark
             </h1>
-            <div className="w-72 text-xl font-medium text-lime11 xl:w-full xl:text-4xl">
+            <div className="laptop:w-full laptop:text-3xl desktop:text-4xl w-72 text-xl font-medium text-lime11">
               <p>Se desafie.</p>
               <p className="text-center">Aprimore suas habilidades.</p>
               <p className="text-right">Supere seus limites.</p>
             </div>
-            <div className="md xs:flex-row xs: flex w-full flex-col justify-between gap-2 xl:justify-start xl:gap-6">
+            <div className="smartphone:flex-row smartphone:justify-start tablet:flex-col laptop:flex-row flex w-full flex-col justify-between gap-2">
               <Button size="lg">Iniciar</Button>
               <Button size="lg" variant="outline">
                 Ver resultados detalhados
               </Button>
             </div>
           </div>
-          <div className="flex flex-col gap-4 xl:max-w-96">
+          <div className="tablet:w-2/4 desktop:w-2/5 laptop:gap-8 flex flex-col gap-4">
             <InfoCard
               icon={<FaClock />}
               title="Titulo 1"
@@ -48,7 +48,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="container-width flex flex-col gap-4 pb-6 xl:grid xl:grid-cols-3">
+      <section className="container-width tablet:grid tablet:grid-cols-2 laptop:grid-cols-3 flex flex-col gap-4 pb-6">
         <GameCard
           icon={<FiTarget />}
           title="Titulo do jogo"
