@@ -75,7 +75,10 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       screens: {
-        xs: "375px",
+        smartphone: "375px",
+        tablet: "640px",
+        laptop: "1024px",
+        desktop: "1280px",
       },
     },
   },

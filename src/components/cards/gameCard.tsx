@@ -8,9 +8,9 @@ interface GameCardProps {
 
 export const GameCard = ({ icon, title, description }: GameCardProps) => {
   return (
-    <div className="xl:w-h-72 flex h-44 w-full items-center justify-evenly rounded-md border border-lime6 bg-gradient-to-b from-lime3 to-lime5 xl:h-72 xl:flex-col">
-      <div className="text-8xl">{icon}</div>
-      <div className="flex w-3/5 flex-col">
+    <div className="group flex h-44 w-full items-center justify-evenly rounded-md border border-lime6 bg-gradient-to-b from-lime3 to-lime5 shadow-md hover:border-lime8 transition transform hover:-translate-y-2 motion-reduce:transition-none motion-reduce:hover:transform-none">
+      <div className="text-8xl group-hover:text-lime11">{icon}</div>
+      <div className="smartphone:w-3/6 flex w-3/5 flex-col">
         <div>
           <h2 className="text-center text-2xl font-medium">{title}</h2>
           <p className="text-center text-lime11">{description}</p>
