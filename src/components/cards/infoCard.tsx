@@ -13,8 +13,10 @@ export const InfoCard = ({ icon, title, description }: InfoCardProps) => {
         {icon}
       </div>
       <div>
-        <h2 className="text-xl font-medium">{title}</h2>
-        <p className="text-justify text-base text-lime11">{description}</p>
+        <h2 className="text-xl font-medium laptop:text-2xl">{title}</h2>
+        <p className="text-justify text-base text-lime11 desktop:text-lg">
+          {description}
+        </p>
       </div>
     </div>
   );
