@@ -78,7 +78,7 @@ export default function Register() {
       <DialogTrigger asChild>
         <Button variant={"link"}>Registrar</Button>
       </DialogTrigger>
-      <DialogContent className="">
+      <DialogContent className="w-1/2">
         <DialogHeader>
           <DialogTitle>Registrar</DialogTitle>
           <DialogDescription>
@@ -88,7 +88,7 @@ export default function Register() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="overflow-scroll max-h-[70vh]"
+            className="max-h-[70vh] overflow-scroll"
           >
             <FormField
               control={form.control}
