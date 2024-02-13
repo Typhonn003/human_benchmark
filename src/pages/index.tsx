@@ -8,6 +8,17 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import { FaBook } from "react-icons/fa";
 import { FiTarget } from "react-icons/fi";
 
+import LoginForm from "@/components/LoginForm";
+import Register from "@/components/Register";
+
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
 export default function Home() {
   return (
     <main className="flex flex-col gap-6">
@@ -17,7 +28,7 @@ export default function Home() {
             <h1 className="z-10 text-center text-3xl font-semibold smartphone:text-[2.3rem] tablet:text-[2rem] laptop:text-5xl  desktop:text-6xl">
               Human Benchmark
             </h1>
-            <div className="z-10 w-72 text-xl font-medium text-lime11 laptop:w-full laptop:text-3xl desktop:text-4xl">
+            <div className="z-10 hidden w-72 text-xl font-medium text-lime11 smartphone:block laptop:w-full laptop:text-3xl desktop:text-4xl">
               <p>Se desafie.</p>
               <p className="text-center">Aprimore suas habilidades.</p>
               <p className="text-right">Supere seus limites.</p>
@@ -28,11 +39,23 @@ export default function Home() {
                 Ver resultados detalhados
               </Button>
             </div>
-            <div className="animate-spin-slow absolute -top-4 h-48 w-48 rounded-full bg-lime4 smartphone:-top-6 smartphone:h-56 smartphone:w-56 tablet:h-64 tablet:w-64 laptop:-top-4 laptop:left-20 laptop:h-72 laptop:w-72 desktop:-top-4 desktop:left-28 desktop:h-80 desktop:w-80">
+            <div className="absolute -top-4 h-48 w-48 animate-spin-slow rounded-full bg-lime4 smartphone:-top-6 smartphone:h-56 smartphone:w-56 tablet:h-64 tablet:w-64 laptop:-top-4 laptop:left-20 laptop:h-72 laptop:w-72 desktop:-top-4 desktop:left-28 desktop:h-80 desktop:w-80">
               <div className="absolute -bottom-5 -right-5 h-24 w-24 rounded-full bg-lime5 smartphone:h-32 smartphone:w-32 laptop:h-40 laptop:w-40 desktop:h-48 desktop:w-48" />
             </div>
           </div>
-          <div className="z-10 flex flex-col gap-4 tablet:w-2/4 laptop:gap-8 desktop:w-2/5">
+          <Card className="z-10 flex w-full flex-col bg-lime2 tablet:w-2/4 desktop:w-2/5">
+            <CardHeader>
+              <CardTitle className="font-bold">Entrar</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <LoginForm />
+            </CardContent>
+            <div className="w-full border-b-[1px]" />
+            <CardFooter className="p-6">
+              <Register />
+            </CardFooter>
+          </Card>
+          {/* <div className="z-10 flex flex-col gap-4 tablet:w-2/4 laptop:gap-8 desktop:w-2/5">
             <InfoCard
               icon={<FaClock />}
               title="Titulo 1"
@@ -48,7 +71,7 @@ export default function Home() {
               title="Titulo 3"
               description="Lorem Ipsum is simply dummy text of the printing."
             />
-          </div>
+          </div> */}
         </div>
       </section>
       <section className="container-width flex flex-col gap-4 pb-6 tablet:grid tablet:grid-cols-2 laptop:grid-cols-3">
