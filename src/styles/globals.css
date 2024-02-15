@@ -77,6 +77,10 @@
 
 @layer components {
   .container-width {
-    @apply mx-auto w-[90%] xl:w-[60%];
+    @apply mx-auto w-[90%] xl:w-[70%];
+  }
+
+  .card-animation {
+    @apply transform transition hover:-translate-y-2 motion-reduce:transition-none motion-reduce:hover:transform-none;
   }
 }

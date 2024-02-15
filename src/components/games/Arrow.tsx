@@ -40,7 +40,7 @@ class Arrow {
     srcDown: string,
     srcLeft: string,
     srcRight: string,
-    srcHeart: string
+    srcHeart: string,
   ) {
     this.up.src = srcUp;
     this.down.src = srcDown;
@@ -61,29 +61,37 @@ class Arrow {
       case "ArrowUp":
         ctx.drawImage(
           this.up,
-          canvas.width / 2 - this.drawSize,
-          canvas.height / 2 - this.drawSize
+          canvas.width / 2 - this.drawSize / 2,
+          canvas.height / 2 - this.drawSize / 2,
+          this.drawSize,
+          this.drawSize,
         );
         break;
       case "ArrowDown":
         ctx.drawImage(
           this.down,
-          canvas.width / 2 - this.drawSize,
-          canvas.height / 2 - this.drawSize
+          canvas.width / 2 - this.drawSize / 2,
+          canvas.height / 2 - this.drawSize / 2,
+          this.drawSize,
+          this.drawSize,
         );
         break;
       case "ArrowLeft":
         ctx.drawImage(
           this.left,
-          canvas.width / 2 - this.drawSize,
-          canvas.height / 2 - this.drawSize
+          canvas.width / 2 - this.drawSize / 2,
+          canvas.height / 2 - this.drawSize / 2,
+          this.drawSize,
+          this.drawSize,
         );
         break;
       case "ArrowRight":
         ctx.drawImage(
           this.right,
-          canvas.width / 2 - this.drawSize,
-          canvas.height / 2 - this.drawSize
+          canvas.width / 2 - this.drawSize / 2,
+          canvas.height / 2 - this.drawSize / 2,
+          this.drawSize,
+          this.drawSize,
         );
         break;
       default:
@@ -118,32 +126,34 @@ class Arrow {
     this.newActual();
   }
 
-  drawScore(ctx: CanvasRenderingContext2D) {
-    ctx.fillStyle = "black";
-    ctx.font = "40px serif";
-    ctx.fillText(`Score: ${this.score}`, 0, 40);
+  drawScore(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
+    ctx.fillStyle = "#37401C";
+    ctx.font = "56px serif";
+    const textContent = `${this.score}`;
+    const textSize = Math.floor(ctx.measureText(textContent).width);
+    ctx.fillText(textContent, canvas.width - textSize - 10, 52);
   }
 
   drawTime(ctx: CanvasRenderingContext2D) {
     this.now = Date.now();
-    ctx.fillStyle = "black";
-    ctx.font = "40px serif";
-    ctx.fillText(
-      `Tempo: ${(this.now - this.time) / 1000}`,
-      0,
-      ctx.canvas.height
+    ctx.fillStyle = "#37401C";
+    ctx.font = "46px serif";
+    const textContent = `Tempo: ${((this.now - this.time) / 1000).toFixed(1)}`;
+    const textSize = Math.floor(
+      ctx.measureText(textContent).actualBoundingBoxDescent,
     );
+    ctx.fillText(textContent, 10, ctx.canvas.height - textSize - 10);
   }
 
   drawLifes(ctx: CanvasRenderingContext2D) {
     for (let i = 0; i < this.life; i++) {
-      ctx.drawImage(this.heart, i * 60, 80);
+      ctx.drawImage(this.heart, 10 + i * 61, 10, 56, 46);
     }
   }
 
   finishGame() {
     const deltaTime = (this.now - this.time) / 1000;
-    if (deltaTime >= 5) {
+    if (deltaTime >= 10) {
       this.win = true;
       this.lastScore = this.score;
       this.gameOver();
@@ -152,18 +162,26 @@ class Arrow {
   }
 
   drawWin(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "#37401C";
     ctx.font = "20px serif";
+
+    let textContent = `Sua pontuação de ${this.lastScore} foi enviada!`;
+    let textSize = Math.floor(ctx.measureText(textContent).width);
+
     ctx.fillText(
-      `Sua pontuação de ${this.lastScore} foi enviada!`,
-      canvas.width / 6,
-      canvas.height - 40
+      textContent,
+      (canvas.width - textSize) / 2,
+      canvas.height - 80,
     );
+
     ctx.font = "12px serif";
+    textContent = "Aperte a seta correspondente para jogar novamente :D";
+    textSize = Math.floor(ctx.measureText(textContent).width);
+
     ctx.fillText(
-      `Aperte a seta correspondente para jogar novamente :D`,
-      canvas.width / 6,
-      canvas.height - 10
+      textContent,
+      (canvas.width - textSize) / 2,
+      canvas.height - 40,
     );
   }
 
@@ -192,7 +210,9 @@ export default function ArrowGame() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [arrow, setArrow] = useState<Arrow | null>(null);
   const cleanScreen = (context: CanvasRenderingContext2D) => {
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    context.fillStyle = "#bdee63";
+    context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+    //context.clearRect(0, 0, context.canvas.width, context.canvas.height);
   };
 
   useEffect(() => {
@@ -200,13 +220,13 @@ export default function ArrowGame() {
     if (canvas) {
       const ctx = canvas.getContext("2d");
       if (ctx) {
-        const arrow = new Arrow(25);
+        const arrow = new Arrow(120);
         arrow.update(
-          "./cima.png",
-          "./baixo.png",
-          "./esquerda.png",
-          "./direita.png",
-          "./coracao.png"
+          "./up.png",
+          "./down.png",
+          "./left.png",
+          "./right.png",
+          "./heart.png",
         );
         arrow.newActual();
         setArrow(arrow);
@@ -223,7 +243,7 @@ export default function ArrowGame() {
             if (ctx && arrow) {
               cleanScreen(ctx);
               arrow.draw(ctx, canvas);
-              arrow.drawScore(ctx);
+              arrow.drawScore(ctx, canvas);
               arrow.drawLifes(ctx);
               if (arrow.time) {
                 arrow.drawTime(ctx);
@@ -246,5 +266,7 @@ export default function ArrowGame() {
     }
   }, []);
 
-  return <canvas ref={canvasRef} width={500} height={500} />;
+  return (
+    <canvas ref={canvasRef} width={500} height={500} className="rounded-md" />
+  );
 }

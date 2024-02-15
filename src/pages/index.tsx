@@ -8,28 +8,54 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import { FaBook } from "react-icons/fa";
 import { FiTarget } from "react-icons/fi";
 
+import LoginForm from "@/components/LoginForm";
+import Register from "@/components/Register";
+
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
 export default function Home() {
   return (
     <main className="flex flex-col gap-6">
       <section className="flex min-h-screen items-center bg-lime3">
-        <div className="container-width flex flex-col items-center gap-5 xl:h-80 xl:flex-row xl:justify-between">
-          <div className="flex w-full flex-col items-center gap-4 xl:h-full xl:max-w-xl xl:items-start xl:justify-around">
-            <h1 className="text-center text-4xl font-semibold xl:text-6xl">
+        <div className="container-width desktop:gap-38 flex max-w-96 flex-col items-center gap-5 tablet:max-w-full tablet:flex-row laptop:gap-20">
+          <div className="relative flex w-full flex-col items-center gap-4 tablet:w-2/4 laptop:items-start laptop:gap-8 desktop:w-3/5">
+            <h1 className="z-10 text-center text-3xl font-semibold smartphone:text-[2.3rem] tablet:text-[2rem] laptop:text-5xl  desktop:text-6xl">
               Human Benchmark
             </h1>
-            <div className="w-72 text-xl font-medium text-lime11 xl:w-full xl:text-4xl">
+            <div className="z-10 hidden w-72 text-xl font-medium text-lime11 smartphone:block laptop:w-full laptop:text-3xl desktop:text-4xl">
               <p>Se desafie.</p>
               <p className="text-center">Aprimore suas habilidades.</p>
               <p className="text-right">Supere seus limites.</p>
             </div>
-            <div className="md xs:flex-row xs: flex w-full flex-col justify-between gap-2 xl:justify-start xl:gap-6">
+            <div className="z-10 flex w-full flex-col justify-between gap-2 smartphone:flex-row smartphone:justify-start tablet:flex-col  laptop:flex-row">
               <Button size="lg">Iniciar</Button>
               <Button size="lg" variant="outline">
                 Ver resultados detalhados
               </Button>
             </div>
+            <div className="absolute -top-4 h-48 w-48 animate-spin-slow rounded-full bg-lime4 smartphone:-top-6 smartphone:h-56 smartphone:w-56 tablet:h-64 tablet:w-64 laptop:-top-4 laptop:left-20 laptop:h-72 laptop:w-72 desktop:-top-4 desktop:left-28 desktop:h-80 desktop:w-80">
+              <div className="absolute -bottom-5 -right-5 h-24 w-24 rounded-full bg-lime5 smartphone:h-32 smartphone:w-32 laptop:h-40 laptop:w-40 desktop:h-48 desktop:w-48" />
+            </div>
           </div>
-          <div className="flex flex-col gap-4 xl:max-w-96">
+          <Card className="z-10 flex w-full flex-col bg-lime2 tablet:w-2/4 desktop:w-2/5">
+            <CardHeader>
+              <CardTitle className="font-bold">Entrar</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <LoginForm />
+            </CardContent>
+            <div className="w-full border-b-[1px]" />
+            <CardFooter className="p-6">
+              <Register />
+            </CardFooter>
+          </Card>
+          {/* <div className="z-10 flex flex-col gap-4 tablet:w-2/4 laptop:gap-8 desktop:w-2/5">
             <InfoCard
               icon={<FaClock />}
               title="Titulo 1"
@@ -45,10 +71,10 @@ export default function Home() {
               title="Titulo 3"
               description="Lorem Ipsum is simply dummy text of the printing."
             />
-          </div>
+          </div> */}
         </div>
       </section>
-      <section className="container-width flex flex-col gap-4 pb-6 xl:grid xl:grid-cols-3">
+      <section className="container-width flex flex-col gap-4 pb-6 tablet:grid tablet:grid-cols-2 laptop:grid-cols-3">
         <GameCard
           icon={<FiTarget />}
           title="Titulo do jogo"
