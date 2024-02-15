@@ -1,6 +1,5 @@
 import { Inter } from "next/font/google";
-import Header from "@/components/Header";
-import ReactionGame from "@/components/Reaction";
+import ReactionGame from "@/components/games/Reaction";
 
 const inter = Inter({ subsets: ["latin"] });
 
