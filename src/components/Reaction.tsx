@@ -48,9 +48,20 @@ export default function ReactionGame()  {
             reactionRef.current.fillScreen('red');
             reactionRef.current.writeOnScreen('Calma, click para reiniciar.');
             break;
+<<<<<<< Updated upstream:src/components/Reaction.tsx
           case 'correct':
             const deltaTime = (reactionRef.current.lastTime - reactionRef.current.time) / 1000;
             reactionRef.current.writeOnScreen(`Parabéns, seu tempo foi de ${deltaTime}s`);
+=======
+          case "correct":
+            const deltaTime =
+              (reactionRef.current.lastTime - reactionRef.current.time) / 1000;
+            //reactionRef.current.scores.push(deltaTime);
+            reactionRef.current.writeOnScreen(
+              `Parabéns, seu tempo foi de ${deltaTime}s`,
+            );
+            //console.log(reactionRef.current.scores);
+>>>>>>> Stashed changes:src/components/games/Reaction.tsx
             break;
           default:
             break;
@@ -73,8 +84,15 @@ export default function ReactionGame()  {
     };
   }, []);
 
+<<<<<<< Updated upstream:src/components/Reaction.tsx
   return <canvas ref={canvasRef} width={500} height={500} />;
 };
+=======
+  return (
+    <canvas ref={canvasRef} width={500} height={500} className="rounded-md" />
+  );
+}
+>>>>>>> Stashed changes:src/components/games/Reaction.tsx
 
 class ReactionClass {
   state: string;
@@ -82,13 +100,16 @@ class ReactionClass {
   lastTime: number;
   timeId: NodeJS.Timeout | null;
   ctx: CanvasRenderingContext2D;
-
+  scores: number[];
+  playTime: number;
   constructor(ctx: CanvasRenderingContext2D) {
     this.state = 'init';
     this.time = 0;
     this.lastTime = 0;
     this.timeId = null;
     this.ctx = ctx;
+    this.scores = [];
+    this.playTime = 0;
   }
 
   fillScreen(color = 'blue') {
@@ -96,7 +117,11 @@ class ReactionClass {
     this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
   }
 
+<<<<<<< Updated upstream:src/components/Reaction.tsx
   writeOnScreen(text: string, size:number = 24, color: string = "black") {
+=======
+  writeOnScreen(text: string, size: number = 24, color: string = "#37401C") {
+>>>>>>> Stashed changes:src/components/games/Reaction.tsx
     this.ctx.fillStyle = color;
     this.ctx.font = `${size}px serif`;
     const textSize = Math.floor(this.ctx.measureText(text).width);
@@ -110,8 +135,18 @@ class ReactionClass {
         this.timeId = null;
         this.state = 'wrong';
         break;
+<<<<<<< Updated upstream:src/components/Reaction.tsx
       case 'click':
         this.state = 'correct';
+=======
+      case "click":
+        if (this.playTime <= 3) {
+          this.scores.push((this.lastTime - this.time) / 1000);
+          this.playTime += 1;
+          this.state = "correct";
+          console.log(this.scores);
+        }
+>>>>>>> Stashed changes:src/components/games/Reaction.tsx
         break;
       default:
         this.time = 0;
