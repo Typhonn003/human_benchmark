@@ -26,44 +26,51 @@ export default function ReactionGame() {
       clearScreen();
       if (reactionRef.current && ctxRef.current) {
         switch (reactionRef.current.state) {
-          case "init":
+          /*case "init":
             reactionRef.current.writeOnScreen("Click na tela para iniciar");
+            reactionRef.current.writeStage("black", 40);
             break;
+            */
           case "waiting":
-            reactionRef.current.fillScreen("blue");
+            reactionRef.current.fillScreen("#0090FF");
             reactionRef.current.writeOnScreen(
-              "Assim que a cor mudar, de um click",
+              "Aguarde a cor mudar",
               undefined,
               "white",
             );
+            reactionRef.current.writeStage("black", 40);
             if (reactionRef.current.timeId === null) {
               reactionRef.current.waitingTime();
             }
             break;
           case "click":
-            reactionRef.current.fillScreen("green");
-            reactionRef.current.writeOnScreen(
-              "Click agora!",
-              undefined,
-              "white",
-            );
+            reactionRef.current.fillScreen("#30A46C");
+            reactionRef.current.writeOnScreen("Click!", undefined, "white");
+            reactionRef.current.writeStage("black", 40);
             if (reactionRef.current.time === 0) {
               reactionRef.current.time = Date.now();
             }
             reactionRef.current.lastTime = Date.now();
             break;
           case "wrong":
-            reactionRef.current.fillScreen("red");
-            reactionRef.current.writeOnScreen("Calma, click para reiniciar.");
+            reactionRef.current.fillScreen("#E5484D");
+            reactionRef.current.writeOnScreen(
+              "Muito cedo, click para reiniciar.",
+              undefined,
+              "white",
+            );
+            reactionRef.current.writeStage("black", 40);
             break;
           case "correct":
             const deltaTime =
               (reactionRef.current.lastTime - reactionRef.current.time) / 1000;
-            //reactionRef.current.scores.push(deltaTime);
-            reactionRef.current.writeOnScreen(
-              `Parabéns, seu tempo foi de ${deltaTime}s`,
-            );
-            //console.log(reactionRef.current.scores);
+            reactionRef.current.writeOnScreen(`Seu tempo foi de ${deltaTime}s`);
+            reactionRef.current.writeStage("black", 40);
+            if (reactionRef.current.playTime >= 3) {
+              reactionRef.current.writeFinal();
+            } else {
+              reactionRef.current.writeNotFinal();
+            }
             break;
           default:
             break;
@@ -101,7 +108,7 @@ class ReactionClass {
   scores: number[];
   playTime: number;
   constructor(ctx: CanvasRenderingContext2D) {
-    this.state = "init";
+    this.state = "waiting"; // não começa mais no "init" pois tem o botão de iniciar fora do jogo
     this.time = 0;
     this.lastTime = 0;
     this.timeId = null;
@@ -126,6 +133,42 @@ class ReactionClass {
     );
   }
 
+  writeStage(color: string = "black", size: number) {
+    this.ctx.fillStyle = color;
+    this.ctx.font = `${size}px Arial`;
+    const text = `${this.playTime}/3`;
+    const textSize = Math.floor(this.ctx.measureText(text).width);
+    this.ctx.fillText(text, this.ctx.canvas.width - textSize - 10, size + 10);
+  }
+
+  writeNotFinal(color: string = "#37401C", size: number = 18) {
+    this.ctx.fillStyle = color;
+    this.ctx.font = `${size}px serif`;
+    const text = `Click para continuar`;
+    const textSize = Math.floor(this.ctx.measureText(text).width);
+    this.ctx.fillText(
+      text,
+      (this.ctx.canvas.width - textSize) / 2,
+      this.ctx.canvas.height * 0.75,
+    );
+  }
+
+  writeFinal(color: string = "#37401C", size: number = 24) {
+    this.ctx.fillStyle = color;
+    this.ctx.font = `${size}px serif`;
+    const total =
+      this.scores.reduce(function (accumulator, value) {
+        return accumulator + value;
+      }, 0) / this.scores.length;
+    const text = `Tempo médio: ${total.toFixed(3)}s`;
+    const textSize = Math.floor(this.ctx.measureText(text).width);
+    this.ctx.fillText(
+      text,
+      (this.ctx.canvas.width - textSize) / 2,
+      this.ctx.canvas.height * 0.75,
+    );
+  }
+
   click() {
     switch (this.state) {
       case "waiting":
@@ -138,7 +181,8 @@ class ReactionClass {
           this.scores.push((this.lastTime - this.time) / 1000);
           this.playTime += 1;
           this.state = "correct";
-          console.log(this.scores);
+        } else {
+          this.state = "final"; // estado para final do jogo
         }
         break;
       default:
