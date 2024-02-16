@@ -16,6 +16,7 @@ class Arrow {
   now: number;
   win: boolean;
   lastScore: number;
+  gameTime: number;
 
   constructor(size: number) {
     this.size = size;
@@ -33,6 +34,7 @@ class Arrow {
     this.now = 0;
     this.win = false;
     this.lastScore = 0;
+    this.gameTime = 5; //no final colocar 30s
   }
 
   update(
@@ -100,6 +102,7 @@ class Arrow {
   }
 
   isCorrect(str: string) {
+    console.log(str);
     if (str == this.actual) {
       this.win = false;
       this.newActual();
@@ -138,7 +141,7 @@ class Arrow {
     this.now = Date.now();
     ctx.fillStyle = "#37401C";
     ctx.font = "46px serif";
-    const textContent = `Tempo: ${((this.now - this.time) / 1000).toFixed(1)}`;
+    const textContent = `Tempo: ${(this.gameTime - (this.now - this.time) / 1000).toFixed(1)}`;
     const textSize = Math.floor(
       ctx.measureText(textContent).actualBoundingBoxDescent,
     );
@@ -153,7 +156,7 @@ class Arrow {
 
   finishGame() {
     const deltaTime = (this.now - this.time) / 1000;
-    if (deltaTime >= 10) {
+    if (deltaTime >= this.gameTime) {
       this.win = true;
       this.lastScore = this.score;
       this.gameOver();
