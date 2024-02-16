@@ -59,9 +59,11 @@ export default function ReactionGame() {
           case "correct":
             const deltaTime =
               (reactionRef.current.lastTime - reactionRef.current.time) / 1000;
+            //reactionRef.current.scores.push(deltaTime);
             reactionRef.current.writeOnScreen(
               `Parabéns, seu tempo foi de ${deltaTime}s`,
             );
+            //console.log(reactionRef.current.scores);
             break;
           default:
             break;
@@ -85,7 +87,9 @@ export default function ReactionGame() {
     };
   }, []);
 
-  return <canvas ref={canvasRef} width={500} height={500} />;
+  return (
+    <canvas ref={canvasRef} width={500} height={500} className="rounded-md" />
+  );
 }
 
 class ReactionClass {
@@ -94,13 +98,16 @@ class ReactionClass {
   lastTime: number;
   timeId: NodeJS.Timeout | null;
   ctx: CanvasRenderingContext2D;
-
+  scores: number[];
+  playTime: number;
   constructor(ctx: CanvasRenderingContext2D) {
     this.state = "init";
     this.time = 0;
     this.lastTime = 0;
     this.timeId = null;
     this.ctx = ctx;
+    this.scores = [];
+    this.playTime = 0;
   }
 
   fillScreen(color = "blue") {
@@ -108,7 +115,7 @@ class ReactionClass {
     this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
   }
 
-  writeOnScreen(text: string, size: number = 24, color: string = "black") {
+  writeOnScreen(text: string, size: number = 24, color: string = "#37401C") {
     this.ctx.fillStyle = color;
     this.ctx.font = `${size}px serif`;
     const textSize = Math.floor(this.ctx.measureText(text).width);
@@ -127,7 +134,12 @@ class ReactionClass {
         this.state = "wrong";
         break;
       case "click":
-        this.state = "correct";
+        if (this.playTime <= 3) {
+          this.scores.push((this.lastTime - this.time) / 1000);
+          this.playTime += 1;
+          this.state = "correct";
+          console.log(this.scores);
+        }
         break;
       default:
         this.time = 0;
