@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import { Games } from "@/components/games";
+import { gamesData } from "@/components/games";
 import { Button } from "@/components/ui/button";
 
 export default function Game() {
@@ -14,7 +14,7 @@ export default function Game() {
     return;
   }
 
-  const { gameComponent, icon, name, instructions } = Games[gameName];
+  const { gameComponent, icon, name, instructions } = gamesData[gameName];
 
   return (
     <main className="flex h-screen items-center justify-center bg-lime3">
