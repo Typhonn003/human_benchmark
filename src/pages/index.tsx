@@ -11,6 +11,8 @@ import { FiTarget } from "react-icons/fi";
 import LoginForm from "@/components/LoginForm";
 import Register from "@/components/Register";
 
+import { gamesInfo } from "@/components/games";
+
 import {
   Card,
   CardContent,
@@ -21,9 +23,9 @@ import {
 
 export default function Home() {
   return (
-    <main className="flex flex-col gap-6">
-      <section className="flex min-h-screen items-center bg-lime3">
-        <div className="container-width desktop:gap-38 flex max-w-96 flex-col items-center gap-5 tablet:max-w-full tablet:flex-row laptop:gap-20">
+    <main className="flex flex-col">
+      <section className="flex items-center bg-lime3 py-16">
+        <div className="container-width desktop:gap-38 flex max-w-96 flex-col items-center gap-5 pt-11 tablet:max-w-full tablet:flex-row laptop:gap-20">
           <div className="relative flex w-full flex-col items-center gap-4 tablet:w-2/4 laptop:items-start laptop:gap-8 desktop:w-3/5">
             <h1 className="z-10 text-center text-3xl font-semibold smartphone:text-[2.3rem] tablet:text-[2rem] laptop:text-5xl  desktop:text-6xl">
               Human Benchmark
@@ -74,27 +76,17 @@ export default function Home() {
           </div> */}
         </div>
       </section>
-      <section className="container-width flex flex-col gap-4 pb-6 tablet:grid tablet:grid-cols-2 laptop:grid-cols-3">
-        <GameCard
-          icon={<FiTarget />}
-          title="Titulo do jogo"
-          description="Descrição do jogo"
-        />
-        <GameCard
-          icon={<FiTarget />}
-          title="Titulo do jogo"
-          description="Descrição do jogo"
-        />
-        <GameCard
-          icon={<FiTarget />}
-          title="Titulo do jogo"
-          description="Descrição do jogo"
-        />
-        <GameCard
-          icon={<FiTarget />}
-          title="Titulo do jogo"
-          description="Descrição do jogo"
-        />
+      <section className="py-8">
+        <ul className="container-width flex flex-col gap-4 tablet:grid tablet:grid-cols-2 laptop:grid-cols-3">
+          {gamesInfo.map(({ icon, name, description }) => (
+            <GameCard
+              key={name}
+              icon={icon}
+              title={name}
+              description={description}
+            />
+          ))}
+        </ul>
       </section>
     </main>
   );

@@ -14,17 +14,21 @@ export interface GameData {
     gameComponent: React.ReactElement;
     icon: React.ReactElement<IconBaseProps>;
     name: string;
-    description: string;
     instructions: string;
   };
 }
 
-export const Games: GameData = {
+interface GamesInfo {
+  icon: React.ReactElement<IconBaseProps>;
+  name: string;
+  description: string;
+}
+
+export const gamesData: GameData = {
   arrow: {
     gameComponent: <ArrowGame />,
     icon: <GiBottomRight3DArrow />,
     name: "Teste de Direção",
-    description: "Você é bom nas setinhas?",
     instructions:
       "Use as setas do teclado que correspondem com a seta que aparece na tela.",
   },
@@ -32,7 +36,6 @@ export const Games: GameData = {
     gameComponent: <Aim />,
     icon: <GiArcheryTarget />,
     name: "Teste de Precisão",
-    description: "Hora de colocar a mira em dia",
     instructions:
       "Use o mouse para acertar 30 alvos na tela o mais rápido possível.",
   },
@@ -40,8 +43,25 @@ export const Games: GameData = {
     gameComponent: <ReactionGame />,
     icon: <GiLightningTear />,
     name: "Teste de Reação",
-    description: "Seus reflexos estão em dia?",
     instructions:
       "Use o mouse para clicar na tela quando a palavra 'CLICK' aparecer.",
   },
 };
+
+export const gamesInfo: GamesInfo[] = [
+  {
+    icon: <GiBottomRight3DArrow />,
+    name: "Teste de Direção",
+    description: "Você é bom nas setinhas?",
+  },
+  {
+    icon: <GiArcheryTarget />,
+    name: "Teste de Precisão",
+    description: "Hora de colocar a mira em dia!",
+  },
+  {
+    icon: <GiLightningTear />,
+    name: "Teste de Reação",
+    description: "Seus reflexos estão em dia?",
+  },
+];
