@@ -107,7 +107,7 @@ class Arrow {
       this.win = false;
       this.newActual();
       this.score++;
-      this.playSoundEffect("./sound.wav");
+      this.playSoundEffect("/sound.wav");
       if (!this.time) {
         this.time = Date.now();
       }
@@ -115,7 +115,7 @@ class Arrow {
       return;
     } else {
       this.life--;
-      this.playHurtEffect("./hurt.mp3");
+      this.playHurtEffect("/hurt.mp3");
       if (this.life == 0) {
         this.gameOver();
       }
@@ -225,11 +225,11 @@ export default function ArrowGame() {
       if (ctx) {
         const arrow = new Arrow(120);
         arrow.update(
-          "./up.png",
-          "./down.png",
-          "./left.png",
-          "./right.png",
-          "./heart.png",
+          "/up.png",
+          "/down.png",
+          "/left.png",
+          "/right.png",
+          "/heart.png",
         );
         arrow.newActual();
         setArrow(arrow);
