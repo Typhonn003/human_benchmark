@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
+import { useGameStatusStore } from "@/store";
 
 export default function ReactionGame() {
+  const { setGameStart } = useGameStatusStore();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const reactionRef = useRef<ReactionClass | null>(null);
@@ -66,16 +68,23 @@ export default function ReactionGame() {
               (reactionRef.current.lastTime - reactionRef.current.time) / 1000;
             reactionRef.current.writeOnScreen(`Seu tempo foi de ${deltaTime}s`);
             reactionRef.current.writeStage("black", 40);
-            if (reactionRef.current.playTime >= 3) {
+            if (reactionRef.current.playTime == 3) {
               reactionRef.current.writeFinal();
             } else {
               reactionRef.current.writeNotFinal();
             }
             break;
+          case "final":
+            setGameStart(false);
+
+            //reactionRef.current.writeFinal();
+            break;
           default:
             break;
         }
-        requestAnimationFrame(animate);
+        if (reactionRef.current.state != "final") {
+          requestAnimationFrame(animate);
+        }
       }
     };
 
@@ -181,10 +190,20 @@ class ReactionClass {
           this.scores.push((this.lastTime - this.time) / 1000);
           this.playTime += 1;
           this.state = "correct";
-        } else {
-          this.state = "final"; // estado para final do jogo
         }
         break;
+
+      case "correct":
+        this.time = 0;
+        this.lastTime = 0;
+        this.timeId = null;
+        if (this.playTime >= 3) {
+          this.state = "final";
+        } else {
+          this.state = "waiting";
+        }
+        break;
+
       default:
         this.time = 0;
         this.lastTime = 0;
