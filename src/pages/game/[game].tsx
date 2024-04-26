@@ -1,13 +1,14 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
 
 import { gamesData } from "@/components/games";
 import { Button } from "@/components/ui/button";
 
+import { useGameStatusStore } from "@/store";
+
 export default function Game() {
   const router = useRouter();
   const gameName = router.query.game as string | undefined;
-  const [start, setStart] = useState<boolean>(false);
+  const { gameStart, setGameStart } = useGameStatusStore();
 
   if (!gameName || !["arrow", "aim", "reaction"].includes(gameName)) {
     //Redirecionar para a pagina 404 caso o jogo não exista
@@ -18,7 +19,7 @@ export default function Game() {
 
   return (
     <main className="flex h-screen items-center justify-center bg-lime3">
-      {start ? (
+      {gameStart ? (
         gameComponent
       ) : (
         <div className="flex h-[500px] w-[500px] flex-col items-center justify-center gap-2 rounded-md bg-lime9">
@@ -28,7 +29,7 @@ export default function Game() {
             {instructions}
           </p>
           <div className="flex gap-2 pt-8">
-            <Button variant="outline" onClick={() => setStart(true)}>
+            <Button variant="outline" onClick={() => setGameStart(true)}>
               Iniciar
             </Button>
             <Button variant="outline">Ver resultados</Button>
