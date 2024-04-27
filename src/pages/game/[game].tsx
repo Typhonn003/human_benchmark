@@ -9,7 +9,6 @@ export default function Game() {
   const router = useRouter();
   const gameName = router.query.game as string | undefined;
   const { gameStart, setGameStart } = useGameStatusStore();
-  console.log(gameStart);
 
   if (!gameName || !["arrow", "aim", "reaction"].includes(gameName)) {
     //Redirecionar para a pagina 404 caso o jogo não exista
