@@ -20,47 +20,12 @@ import {
 import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-const formSchema = z
-  .object({
-    name: z
-      .string()
-      .min(2, "Tamanho mínimo de 2 caracteres")
-      .max(50, "Tamanho máximo de 50 caracteres"),
-    username: z
-      .string()
-      .min(2, "Tamanho mínimo de 2 caracteres")
-      .max(50, "Tamanho máximo de 50 caracteres"),
-    email: z
-      .string()
-      .min(2)
-      .max(50, "Tamanho máximo de 50 caracteres")
-      .email("Precisa ser um email válido"),
-    password: z
-      .string()
-      .min(8, "Tamanho mínimo de 8 caracteres")
-      .regex(/(?=.*?[A-Z])/, "Precisa ter uma letra maiúscula")
-      .regex(/(?=.*?[a-z])/, "Precisa ter uma letra minúscula")
-      .regex(/(?=.*?[0-9])/, "Precisa conter um número")
-      .regex(/(?=.*?[#?!@$%^&*-])/, "Precisa ter um caractere especial")
-      .max(50, "Tamanho máximo de 50 caracteres"),
-    confirmPassword: z
-      .string()
-      .min(8, "Tamanho mínimo de 8 caracteres")
-      .regex(/(?=.*?[A-Z])/, "Precisa ter uma letra maiúscula")
-      .regex(/(?=.*?[a-z])/, "Precisa ter uma letra minúscula")
-      .regex(/(?=.*?[0-9])/, "Precisa conter um número")
-      .regex(/(?=.*?[#?!@$%^&*-])/, "Precisa ter um caractere especial")
-      .max(50, "Tamanho máximo de 50 caracteres"),
-  })
-  .refine(({ password, confirmPassword }) => password === confirmPassword, {
-    message: "As senhas não correspondem.",
-    path: ["confirmPassword"],
-  });
+import { api } from "@/services/axios";
+import { registerSchema } from "@/schemas";
 
 export default function Register() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
       username: "",
@@ -70,8 +35,13 @@ export default function Register() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof registerSchema>) {
+    try {
+      const response = await api.post("/users/", values);
+    } catch (error) {
+      console.log(error);
+    } finally {
+    }
   }
   return (
     <Dialog>
