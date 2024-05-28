@@ -14,8 +14,10 @@ import { Input } from "@/components/ui/input";
 import { api } from "@/services/axios";
 import { setCookie } from "nookies";
 import { loginSchema } from "@/schemas";
+import { useRouter } from "next/router";
 
 export default function ProfileForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -29,10 +31,12 @@ export default function ProfileForm() {
       const {
         data: { token },
       } = await api.post("login", loginData);
-      setCookie(null, "tech-hub-token", token, {
+      setCookie(null, "h-benchmark", token, {
         maxAge: 60 * 30,
         path: "/",
       });
+
+      router.push("/profile");
     } catch (error) {
       console.error(error);
     }
@@ -48,7 +52,7 @@ export default function ProfileForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="Hidrogênio" {...field} />
+                <Input placeholder="hidrogenio@mail.com" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
