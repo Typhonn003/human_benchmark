@@ -2,13 +2,11 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { FaGear } from "react-icons/fa6";
 import {
   Form,
   FormControl,
@@ -17,13 +15,21 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
+import { FaGear } from "react-icons/fa6";
 import { Input } from "../ui/input";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { TEditProfileSchema, editProfileSchema } from "@/schemas";
 import { api } from "@/services/axios";
+import { useState } from "react";
+import { destroyCookie } from "nookies";
+import { useRouter } from "next/router";
 
 export const EditProfile = ({ name, id }: { name: string; id: string }) => {
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const router = useRouter();
+
   const form = useForm<TEditProfileSchema>({
     resolver: zodResolver(editProfileSchema),
     defaultValues: {
@@ -31,15 +37,30 @@ export const EditProfile = ({ name, id }: { name: string; id: string }) => {
     },
   });
 
-  async function onSubmit(values: TEditProfileSchema) {
-    console.log(values);
+  const onSubmit = async (values: TEditProfileSchema) => {
     try {
-      const response = await api.patch(`/users/${id}`, values);
-      console.log(response);
+      await api.patch(`/users/${id}`, values);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
-  }
+  };
+
+  const handleDelete = async () => {
+    if (confirmDelete) {
+      try {
+        await api.delete(`/users/${id}`);
+        destroyCookie(null, "h-benchmark");
+        router.push("/");
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      setConfirmDelete(true);
+      setTimeout(() => {
+        setConfirmDelete(false);
+      }, 3000);
+    }
+  };
 
   return (
     <Dialog>
@@ -73,9 +94,12 @@ export const EditProfile = ({ name, id }: { name: string; id: string }) => {
                 </FormItem>
               )}
             />
-            <DialogFooter>
+            <div className="flex flex-col gap-2">
               <Button type="submit">Salvar mudanças</Button>
-            </DialogFooter>
+              <Button variant="outline" type="button" onClick={handleDelete}>
+                {confirmDelete ? "Tem certeza?" : "Desativar conta"}
+              </Button>
+            </div>
           </form>
         </Form>
       </DialogContent>
