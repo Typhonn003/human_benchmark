@@ -1,4 +1,4 @@
-import { api } from "@/services/axios";
+import api from "@/services/axios";
 import useSWR from "swr";
 
 const useFetch = <Data = any>(url: string, token: string) => {

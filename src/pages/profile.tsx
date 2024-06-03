@@ -26,7 +26,7 @@ export interface Game {
   name: string;
 }
 
-export default function Profile() {
+const Profile = () => {
   const router = useRouter();
   const cookies = parseCookies();
   const token = cookies["h-benchmark"];
@@ -140,4 +140,6 @@ export default function Profile() {
       </section>
     </main>
   );
-}
+};
+
+export default Profile;
