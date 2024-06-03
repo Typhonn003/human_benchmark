@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
 
 import { InfoCard } from "@/components/cards/infoCard";
-import { GameCard } from "@/components/cards/gameCard";
+import { GameCard } from "@/components/cards/GameCard";
 
 import { FaClock } from "react-icons/fa";
 import { BsFillPeopleFill } from "react-icons/bs";
 import { FaBook } from "react-icons/fa";
 import { FiTarget } from "react-icons/fi";
 
-import LoginForm from "@/components/LoginForm";
-import Register from "@/components/Register";
+import LoginForm from "@/components/forms/LoginForm";
+import Register from "@/components/forms/Register";
 
 import { gamesInfo } from "@/components/games";
 
@@ -19,7 +19,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/Card";
 
 export default function Home() {
   return (

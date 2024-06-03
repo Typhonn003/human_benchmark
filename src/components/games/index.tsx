@@ -1,7 +1,7 @@
 import { IconBaseProps } from "react-icons";
-import Aim from "./Aim";
-import ArrowGame from "./Arrow";
-import ReactionGame from "./Reaction";
+import Aim from "./AimGame";
+import ArrowGame from "./ArrowGame";
+import ReactionGame from "./ReactionGame";
 
 import {
   GiArcheryTarget,
