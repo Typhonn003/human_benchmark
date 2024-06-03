@@ -33,14 +33,14 @@ const RegisterForm = () => {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof registerSchema>) {
+  const onSubmit = async (values: z.infer<typeof registerSchema>) => {
     try {
       const response = await api.post("/users/", values);
     } catch (error) {
       console.log(error);
     } finally {
     }
-  }
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
