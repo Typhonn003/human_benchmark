@@ -1,23 +1,3 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/Dialog";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../ui/Form";
-import { FaGear } from "react-icons/fa6";
-import { Input } from "../ui/Input";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { TEditProfileSchema, editProfileSchema } from "@/schemas";
@@ -26,7 +6,25 @@ import { useState } from "react";
 import { destroyCookie } from "nookies";
 import { useRouter } from "next/router";
 
-export const EditProfile = ({ name, id }: { name: string; id: string }) => {
+import { FaGear } from "react-icons/fa6";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+} from "@/components";
+
+const EditProfile = ({ name, id }: { name: string; id: string }) => {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const router = useRouter();
 
@@ -97,7 +95,7 @@ export const EditProfile = ({ name, id }: { name: string; id: string }) => {
             <div className="flex flex-col gap-2">
               <Button type="submit">Salvar mudanças</Button>
               <Button variant="outline" type="button" onClick={handleDelete}>
-                {confirmDelete ? "Tem certeza?" : "Desativar conta"}
+                {confirmDelete ? "Clique para confirmar" : "Desativar conta"}
               </Button>
             </div>
           </form>
@@ -106,3 +104,5 @@ export const EditProfile = ({ name, id }: { name: string; id: string }) => {
     </Dialog>
   );
 };
+
+export { EditProfile };

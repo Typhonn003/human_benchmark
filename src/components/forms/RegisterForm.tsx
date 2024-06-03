@@ -1,29 +1,27 @@
 import { z } from "zod";
-import { Button } from "../ui/button";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { api } from "@/services/axios";
+import { registerSchema } from "@/schemas";
+
 import {
+  Button,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/Dialog";
-import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/Form";
-import { Input } from "../ui/Input";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { api } from "@/services/axios";
-import { registerSchema } from "@/schemas";
+  Input,
+} from "@/components";
 
-export default function Register() {
+const RegisterForm = () => {
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -148,4 +146,6 @@ export default function Register() {
       </DialogContent>
     </Dialog>
   );
-}
+};
+
+export { RegisterForm };

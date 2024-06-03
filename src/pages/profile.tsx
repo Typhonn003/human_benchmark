@@ -1,8 +1,7 @@
-import { useFetch } from "@/hooks/useFetch";
+import { EditProfile, gamesData } from "@/components";
+import useFetch from "@/hooks/useFetch";
 import { useRouter } from "next/router";
 import { parseCookies } from "nookies";
-import { gamesData } from "@/components/games/index";
-import { EditProfile } from "../components/modal/EditProfile";
 
 export interface IUserScore {
   id: string;

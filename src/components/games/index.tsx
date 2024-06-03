@@ -1,7 +1,7 @@
 import { IconBaseProps } from "react-icons";
-import Aim from "./AimGame";
-import ArrowGame from "./ArrowGame";
-import ReactionGame from "./ReactionGame";
+import { AimGame } from "./AimGame";
+import { ArrowGame } from "./ArrowGame";
+import { ReactionGame } from "./ReactionGame";
 
 import {
   GiArcheryTarget,
@@ -24,7 +24,7 @@ interface GamesInfo {
   description: string;
 }
 
-export const gamesData: GameData = {
+const gamesData: GameData = {
   arrow: {
     gameComponent: <ArrowGame />,
     icon: <GiBottomRight3DArrow />,
@@ -33,7 +33,7 @@ export const gamesData: GameData = {
       "Use as setas do teclado que correspondem com a seta que aparece na tela.",
   },
   aim: {
-    gameComponent: <Aim />,
+    gameComponent: <AimGame />,
     icon: <GiArcheryTarget />,
     name: "Teste de Precisão",
     instructions:
@@ -48,7 +48,7 @@ export const gamesData: GameData = {
   },
 };
 
-export const gamesInfo: GamesInfo[] = [
+const gamesInfo: GamesInfo[] = [
   {
     icon: <GiBottomRight3DArrow />,
     name: "Teste de Direção",
@@ -65,3 +65,5 @@ export const gamesInfo: GamesInfo[] = [
     description: "Seus reflexos estão em dia?",
   },
 ];
+
+export { gamesData, gamesInfo };

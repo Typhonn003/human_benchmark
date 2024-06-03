@@ -209,7 +209,7 @@ class Arrow {
   }
 }
 
-export default function ArrowGame() {
+const ArrowGame = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [arrow, setArrow] = useState<Arrow | null>(null);
   const cleanScreen = (context: CanvasRenderingContext2D) => {
@@ -272,4 +272,6 @@ export default function ArrowGame() {
   return (
     <canvas ref={canvasRef} width={500} height={500} className="rounded-md" />
   );
-}
+};
+
+export { ArrowGame };

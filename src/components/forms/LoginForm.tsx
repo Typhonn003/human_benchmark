@@ -1,22 +1,23 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { api } from "@/services/axios";
+import { setCookie } from "nookies";
+import { loginSchema } from "@/schemas";
+import { useRouter } from "next/router";
+
 import {
+  Button,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/Form";
-import { Input } from "@/components/ui/Input";
-import { api } from "@/services/axios";
-import { setCookie } from "nookies";
-import { loginSchema } from "@/schemas";
-import { useRouter } from "next/router";
+  Input,
+} from "@/components";
 
-export default function ProfileForm() {
+const LoginForm = () => {
   const router = useRouter();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -75,4 +76,6 @@ export default function ProfileForm() {
       </form>
     </Form>
   );
-}
+};
+
+export { LoginForm };

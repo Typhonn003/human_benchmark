@@ -1,113 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useGameStatusStore } from "@/store";
 
-export default function ReactionGame() {
-  const { setGameStart } = useGameStatusStore();
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
-  const reactionRef = useRef<ReactionClass | null>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const reaction = new ReactionClass(ctx);
-    reactionRef.current = reaction;
-    ctxRef.current = ctx;
-
-    const handleClick = () => {
-      if (reactionRef.current) {
-        reactionRef.current.click();
-      }
-    };
-
-    const animate = () => {
-      clearScreen();
-      if (reactionRef.current && ctxRef.current) {
-        switch (reactionRef.current.state) {
-          /*case "init":
-            reactionRef.current.writeOnScreen("Click na tela para iniciar");
-            reactionRef.current.writeStage("black", 40);
-            break;
-            */
-          case "waiting":
-            reactionRef.current.fillScreen("#0090FF");
-            reactionRef.current.writeOnScreen(
-              "Aguarde a cor mudar",
-              undefined,
-              "white",
-            );
-            reactionRef.current.writeStage("black", 40);
-            if (reactionRef.current.timeId === null) {
-              reactionRef.current.waitingTime();
-            }
-            break;
-          case "click":
-            reactionRef.current.fillScreen("#30A46C");
-            reactionRef.current.writeOnScreen("Click!", undefined, "white");
-            reactionRef.current.writeStage("black", 40);
-            if (reactionRef.current.time === 0) {
-              reactionRef.current.time = Date.now();
-            }
-            reactionRef.current.lastTime = Date.now();
-            break;
-          case "wrong":
-            reactionRef.current.fillScreen("#E5484D");
-            reactionRef.current.writeOnScreen(
-              "Muito cedo, click para reiniciar.",
-              undefined,
-              "white",
-            );
-            reactionRef.current.writeStage("black", 40);
-            break;
-          case "correct":
-            const deltaTime =
-              (reactionRef.current.lastTime - reactionRef.current.time) / 1000;
-            reactionRef.current.writeOnScreen(`Seu tempo foi de ${deltaTime}s`);
-            reactionRef.current.writeStage("black", 40);
-            if (reactionRef.current.playTime == 3) {
-              reactionRef.current.writeFinal();
-            } else {
-              reactionRef.current.writeNotFinal();
-            }
-            break;
-          case "final":
-            setGameStart(false);
-
-            //reactionRef.current.writeFinal();
-            break;
-          default:
-            break;
-        }
-        if (reactionRef.current.state != "final") {
-          requestAnimationFrame(animate);
-        }
-      }
-    };
-
-    const clearScreen = () => {
-      if (ctxRef.current) {
-        ctxRef.current.fillStyle = "#bdee63";
-        ctxRef.current.fillRect(0, 0, canvas.width, canvas.height);
-      }
-    };
-
-    canvas.addEventListener("click", handleClick);
-    animate();
-
-    return () => {
-      canvas.removeEventListener("click", handleClick);
-    };
-  }, []);
-
-  return (
-    <canvas ref={canvasRef} width={500} height={500} className="rounded-md" />
-  );
-}
-
 class ReactionClass {
   state: string;
   time: number;
@@ -220,3 +113,112 @@ class ReactionClass {
     }, randomTime);
   }
 }
+
+const ReactionGame = () => {
+  const { setGameStart } = useGameStatusStore();
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
+  const reactionRef = useRef<ReactionClass | null>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const reaction = new ReactionClass(ctx);
+    reactionRef.current = reaction;
+    ctxRef.current = ctx;
+
+    const handleClick = () => {
+      if (reactionRef.current) {
+        reactionRef.current.click();
+      }
+    };
+
+    const animate = () => {
+      clearScreen();
+      if (reactionRef.current && ctxRef.current) {
+        switch (reactionRef.current.state) {
+          /*case "init":
+            reactionRef.current.writeOnScreen("Click na tela para iniciar");
+            reactionRef.current.writeStage("black", 40);
+            break;
+            */
+          case "waiting":
+            reactionRef.current.fillScreen("#0090FF");
+            reactionRef.current.writeOnScreen(
+              "Aguarde a cor mudar",
+              undefined,
+              "white",
+            );
+            reactionRef.current.writeStage("black", 40);
+            if (reactionRef.current.timeId === null) {
+              reactionRef.current.waitingTime();
+            }
+            break;
+          case "click":
+            reactionRef.current.fillScreen("#30A46C");
+            reactionRef.current.writeOnScreen("Click!", undefined, "white");
+            reactionRef.current.writeStage("black", 40);
+            if (reactionRef.current.time === 0) {
+              reactionRef.current.time = Date.now();
+            }
+            reactionRef.current.lastTime = Date.now();
+            break;
+          case "wrong":
+            reactionRef.current.fillScreen("#E5484D");
+            reactionRef.current.writeOnScreen(
+              "Muito cedo, click para reiniciar.",
+              undefined,
+              "white",
+            );
+            reactionRef.current.writeStage("black", 40);
+            break;
+          case "correct":
+            const deltaTime =
+              (reactionRef.current.lastTime - reactionRef.current.time) / 1000;
+            reactionRef.current.writeOnScreen(`Seu tempo foi de ${deltaTime}s`);
+            reactionRef.current.writeStage("black", 40);
+            if (reactionRef.current.playTime == 3) {
+              reactionRef.current.writeFinal();
+            } else {
+              reactionRef.current.writeNotFinal();
+            }
+            break;
+          case "final":
+            setGameStart(false);
+
+            //reactionRef.current.writeFinal();
+            break;
+          default:
+            break;
+        }
+        if (reactionRef.current.state != "final") {
+          requestAnimationFrame(animate);
+        }
+      }
+    };
+
+    const clearScreen = () => {
+      if (ctxRef.current) {
+        ctxRef.current.fillStyle = "#bdee63";
+        ctxRef.current.fillRect(0, 0, canvas.width, canvas.height);
+      }
+    };
+
+    canvas.addEventListener("click", handleClick);
+    animate();
+
+    return () => {
+      canvas.removeEventListener("click", handleClick);
+    };
+  }, []);
+
+  return (
+    <canvas ref={canvasRef} width={500} height={500} className="rounded-md" />
+  );
+};
+
+export { ReactionGame };

@@ -1,11 +1,9 @@
 import { useRouter } from "next/router";
-
-import { gamesData } from "@/components/games";
-import { Button } from "@/components/ui/button";
-
 import { useGameStatusStore } from "@/store";
 
-export default function Game() {
+import { Button, gamesData } from "@/components";
+
+const Game = () => {
   const router = useRouter();
   const gameName = router.query.game as string | undefined;
   const { gameStart, setGameStart } = useGameStatusStore();
@@ -38,4 +36,6 @@ export default function Game() {
       )}
     </main>
   );
-}
+};
+
+export { Game };

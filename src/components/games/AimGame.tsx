@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 
 interface Iposition {
   x: number;
@@ -13,7 +13,7 @@ class Circle {
     x: number,
     y: number,
     radius: number,
-    ctx: CanvasRenderingContext2D
+    ctx: CanvasRenderingContext2D,
   ) {
     this.position = { x: x, y: y };
     this.radius = radius;
@@ -39,7 +39,7 @@ class Circle {
   isInside(clickX: number, clickY: number) {
     const distance = Math.sqrt(
       Math.pow(this.position.x - clickX, 2) +
-        Math.pow(this.position.y - clickY, 2)
+        Math.pow(this.position.y - clickY, 2),
     );
 
     if (distance <= this.radius) {
@@ -50,7 +50,7 @@ class Circle {
   }
 }
 
-export default function Aim() {
+const AimGame = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   let score = 0;
   const circle = useRef<Circle | null>(null);
@@ -84,7 +84,7 @@ export default function Aim() {
         if (
           circle.current.isInside(
             (e as MouseEvent).offsetX,
-            (e as MouseEvent).offsetY
+            (e as MouseEvent).offsetY,
           )
         ) {
           circle.current.move();
@@ -124,4 +124,6 @@ export default function Aim() {
   }, []);
 
   return <canvas className="border-2 border-white" ref={canvasRef} />;
-}
+};
+
+export { AimGame };

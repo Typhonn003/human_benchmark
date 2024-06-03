@@ -1,27 +1,17 @@
-import { Button } from "@/components/ui/button";
-
-import { InfoCard } from "@/components/cards/infoCard";
-import { GameCard } from "@/components/cards/GameCard";
-
-import { FaClock } from "react-icons/fa";
-import { BsFillPeopleFill } from "react-icons/bs";
-import { FaBook } from "react-icons/fa";
-import { FiTarget } from "react-icons/fi";
-
-import LoginForm from "@/components/forms/LoginForm";
-import Register from "@/components/forms/Register";
-
-import { gamesInfo } from "@/components/games";
-
 import {
+  Button,
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
+  GameCard,
+  LoginForm,
+  RegisterForm,
+  gamesInfo,
+} from "@/components";
 
-export default function Home() {
+const Home = () => {
   return (
     <main className="flex flex-col">
       <section className="flex items-center bg-lime3 py-16">
@@ -54,26 +44,9 @@ export default function Home() {
             </CardContent>
             <div className="w-full border-b-[1px]" />
             <CardFooter className="p-6">
-              <Register />
+              <RegisterForm />
             </CardFooter>
           </Card>
-          {/* <div className="z-10 flex flex-col gap-4 tablet:w-2/4 laptop:gap-8 desktop:w-2/5">
-            <InfoCard
-              icon={<FaClock />}
-              title="Titulo 1"
-              description="Lorem Ipsum is simply dummy text of the printing."
-            />
-            <InfoCard
-              icon={<BsFillPeopleFill />}
-              title="Titulo 2"
-              description="Lorem Ipsum is simply dummy text of the printing."
-            />
-            <InfoCard
-              icon={<FaBook />}
-              title="Titulo 3"
-              description="Lorem Ipsum is simply dummy text of the printing."
-            />
-          </div> */}
         </div>
       </section>
       <section className="py-8">
@@ -90,4 +63,6 @@ export default function Home() {
       </section>
     </main>
   );
-}
+};
+
+export default Home;
