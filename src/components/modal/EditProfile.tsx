@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { TEditProfileSchema, editProfileSchema } from "@/schemas";
-import { api } from "@/services/axios";
+import api from "@/services/axios";
 import { useState } from "react";
 import { destroyCookie } from "nookies";
 import { useRouter } from "next/router";
