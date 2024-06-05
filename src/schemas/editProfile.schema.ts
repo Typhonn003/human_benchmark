@@ -6,10 +6,6 @@ export const editProfileSchema = z
       .string()
       .min(2, "Tamanho mínimo de 2 caracteres")
       .max(50, "Tamanho máximo de 50 caracteres"),
-    username: z
-      .string()
-      .min(2, "Tamanho mínimo de 2 caracteres")
-      .max(50, "Tamanho máximo de 50 caracteres"),
     email: z
       .string()
       .min(2)

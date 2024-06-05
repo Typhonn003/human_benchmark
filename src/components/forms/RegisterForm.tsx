@@ -26,7 +26,6 @@ const RegisterForm = () => {
     resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
-      username: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -57,6 +56,7 @@ const RegisterForm = () => {
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-2 smartphone:flex-row"
+            id="register-form"
           >
             <div className="flex flex-col gap-2 smartphone:w-1/2">
               <FormField
@@ -67,19 +67,6 @@ const RegisterForm = () => {
                     <FormLabel>Nome</FormLabel>
                     <FormControl>
                       <Input placeholder="Hidrogênio" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Usuário</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Hidr0G" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -134,14 +121,11 @@ const RegisterForm = () => {
                   </FormItem>
                 )}
               />
-              <Button
-                type="submit"
-                className="w-full smartphone:absolute smartphone:bottom-0"
-              >
-                Enviar
-              </Button>
             </div>
           </form>
+          <Button type="submit" className="w-full" form="register-form">
+            Enviar
+          </Button>
         </Form>
       </DialogContent>
     </Dialog>
