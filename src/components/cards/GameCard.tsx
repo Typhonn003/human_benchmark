@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
 interface GameCardProps {
   icon: ReactNode;
@@ -9,12 +9,13 @@ interface GameCardProps {
 }
 
 const GameCard = ({ icon, title, description, name }: GameCardProps) => {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
-    <li 
-      className="card-animation group flex h-44 w-full items-center justify-evenly rounded-md border border-lime6 bg-gradient-to-b from-lime3 to-lime5 shadow-md hover:border-lime8"
-      onClick={() => router.push(`/game/${name}`)}>
+    <li
+      className="card-animation group flex h-44 w-full items-center justify-evenly rounded-md border border-lime6 bg-gradient-to-b from-lime3 to-lime5 shadow-md hover:cursor-pointer hover:border-lime8"
+      onClick={() => router.push(`/game/${name}`)}
+    >
       <div className="text-8xl group-hover:text-lime11">{icon}</div>
       <div className="flex w-3/5 flex-col">
         <div>
