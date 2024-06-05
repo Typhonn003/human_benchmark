@@ -19,3 +19,11 @@ interface Game {
   id: string;
   name: string;
 }
+
+export interface IUserUpdate {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  active: boolean;
+}

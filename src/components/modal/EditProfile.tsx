@@ -5,6 +5,8 @@ import api from "@/services/axios";
 import { useState } from "react";
 import { destroyCookie } from "nookies";
 import { useRouter } from "next/router";
+import { useUserStore } from "@/store";
+import { IUserUpdate } from "@/interfaces/user.interface";
 
 import { FaGear } from "react-icons/fa6";
 import {
@@ -23,10 +25,9 @@ import {
   FormMessage,
   Input,
 } from "@/components";
-import { useUserStore } from "@/store";
 
 const EditProfile = ({ name, id }: { name: string; id: string }) => {
-  const { setUser } = useUserStore();
+  const { user, setUser } = useUserStore();
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -40,9 +41,10 @@ const EditProfile = ({ name, id }: { name: string; id: string }) => {
 
   const onSubmit = async (values: TEditProfileSchema) => {
     try {
-      const { data } = await api.patch(`/users/${id}`, values);
+      const response = await api.patch(`/users/${id}`, values);
+      const data: IUserUpdate = response.data;
+      setUser({ ...data, user_points: user!.user_points });
       setIsOpen(false);
-      setUser({ ...data });
     } catch (error) {
       console.error(error);
     }
