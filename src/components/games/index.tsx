@@ -22,6 +22,7 @@ interface GamesInfo {
   icon: React.ReactElement<IconBaseProps>;
   name: string;
   description: string;
+  title: string;
 }
 
 const gamesData: GameData = {
@@ -51,18 +52,21 @@ const gamesData: GameData = {
 const gamesInfo: GamesInfo[] = [
   {
     icon: <GiBottomRight3DArrow />,
-    name: "Teste de Direção",
+    name: "arrow",
     description: "Você é bom nas setinhas?",
+    title: "Teste de Direção",
   },
   {
     icon: <GiArcheryTarget />,
-    name: "Teste de Precisão",
+    name: "aim",
     description: "Hora de colocar a mira em dia!",
+    title: "Teste de Precisão",
   },
   {
     icon: <GiLightningTear />,
-    name: "Teste de Reação",
+    name: "reaction",
     description: "Seus reflexos estão em dia?",
+    title: "Teste de Reação",
   },
 ];
 

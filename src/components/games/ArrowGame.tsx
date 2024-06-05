@@ -102,7 +102,6 @@ class Arrow {
   }
 
   isCorrect(str: string) {
-    console.log(str);
     if (str == this.actual) {
       this.win = false;
       this.newActual();

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import api from "@/services/axios";
 import { registerSchema } from "@/schemas";
+import { useState } from "react";
 
 import {
   Button,
@@ -22,11 +23,12 @@ import {
 } from "@/components";
 
 const RegisterForm = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
-      username: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -35,16 +37,22 @@ const RegisterForm = () => {
 
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
     try {
-      const response = await api.post("/users/", values);
+      await api.post("/users/", values);
+      setIsOpen(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
     }
   };
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="lg" className="w-full">
+        <Button
+          variant="outline"
+          size="lg"
+          className="w-full"
+          onClick={() => setIsOpen(true)}
+        >
           Criar nova conta
         </Button>
       </DialogTrigger>
@@ -57,6 +65,7 @@ const RegisterForm = () => {
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-2 smartphone:flex-row"
+            id="register-form"
           >
             <div className="flex flex-col gap-2 smartphone:w-1/2">
               <FormField
@@ -67,19 +76,6 @@ const RegisterForm = () => {
                     <FormLabel>Nome</FormLabel>
                     <FormControl>
                       <Input placeholder="Hidrogênio" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Usuário</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Hidr0G" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -134,14 +130,11 @@ const RegisterForm = () => {
                   </FormItem>
                 )}
               />
-              <Button
-                type="submit"
-                className="w-full smartphone:absolute smartphone:bottom-0"
-              >
-                Enviar
-              </Button>
             </div>
           </form>
+          <Button type="submit" className="w-full" form="register-form">
+            Enviar
+          </Button>
         </Form>
       </DialogContent>
     </Dialog>

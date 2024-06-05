@@ -1,3 +1,7 @@
+import { useUserStore } from "@/store";
+import { useRouter } from "next/router";
+import { parseCookies } from "nookies";
+
 import {
   Button,
   Card,
@@ -12,6 +16,15 @@ import {
 } from "@/components";
 
 const Home = () => {
+  const router = useRouter();
+  const cookies = parseCookies();
+  const token = cookies["h-benchmark"];
+  const { user } = useUserStore();
+
+  if (user || token) {
+    router.push("/profile");
+  }
+
   return (
     <main className="flex flex-col">
       <section className="flex items-center bg-lime3 py-16">
@@ -51,11 +64,12 @@ const Home = () => {
       </section>
       <section className="py-8">
         <ul className="container-width flex flex-col gap-4 tablet:grid tablet:grid-cols-2 laptop:grid-cols-3">
-          {gamesInfo.map(({ icon, name, description }) => (
+          {gamesInfo.map(({ icon, name, description, title }) => (
             <GameCard
               key={name}
               icon={icon}
-              title={name}
+              title={title}
+              name={name}
               description={description}
             />
           ))}
