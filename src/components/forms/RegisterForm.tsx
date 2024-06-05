@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import api from "@/services/axios";
 import { registerSchema } from "@/schemas";
+import { useState } from "react";
 
 import {
   Button,
@@ -22,6 +23,8 @@ import {
 } from "@/components";
 
 const RegisterForm = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -34,16 +37,22 @@ const RegisterForm = () => {
 
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
     try {
-      const response = await api.post("/users/", values);
+      await api.post("/users/", values);
+      setIsOpen(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
     }
   };
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="lg" className="w-full">
+        <Button
+          variant="outline"
+          size="lg"
+          className="w-full"
+          onClick={() => setIsOpen(true)}
+        >
           Criar nova conta
         </Button>
       </DialogTrigger>

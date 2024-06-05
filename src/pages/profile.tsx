@@ -146,6 +146,7 @@ const Profile = () => {
             })}
           </ul>
         </section>
+        
       </main>
     );
   }

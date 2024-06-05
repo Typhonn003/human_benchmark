@@ -23,9 +23,12 @@ import {
   FormMessage,
   Input,
 } from "@/components";
+import { useUserStore } from "@/store";
 
 const EditProfile = ({ name, id }: { name: string; id: string }) => {
+  const { setUser } = useUserStore();
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
   const form = useForm<TEditProfileSchema>({
@@ -37,7 +40,9 @@ const EditProfile = ({ name, id }: { name: string; id: string }) => {
 
   const onSubmit = async (values: TEditProfileSchema) => {
     try {
-      await api.patch(`/users/${id}`, values);
+      const { data } = await api.patch(`/users/${id}`, values);
+      setIsOpen(false);
+      setUser({ ...data });
     } catch (error) {
       console.error(error);
     }
@@ -61,7 +66,7 @@ const EditProfile = ({ name, id }: { name: string; id: string }) => {
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button className="px-2">
           <FaGear className="h-6 w-6" />
