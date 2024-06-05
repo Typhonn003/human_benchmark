@@ -1,7 +1,7 @@
 import api from "@/services/axios";
 import { useUserStore } from "@/store";
 import { useRouter } from "next/router";
-import { parseCookies } from "nookies";
+import { destroyCookie, parseCookies } from "nookies";
 import { useEffect } from "react";
 
 import { EditProfile, gamesData } from "@/components";
@@ -22,6 +22,8 @@ const Profile = () => {
         setUser(response.data);
       } catch (error) {
         console.error(error);
+        setUser(null);
+        destroyCookie(null, "h-benchmark");
         router.push("/");
       } finally {
         setLoadingData(false);
