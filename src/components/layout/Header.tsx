@@ -1,8 +1,9 @@
-import { useUserStore } from "@/store";
 import Link from "next/link";
-import { Button } from "../ui/Button";
+import { useUserStore } from "@/store";
 import { destroyCookie } from "nookies";
 import { useRouter } from "next/router";
+
+import { Button } from "@/components";
 
 const Header = () => {
   const { user, setUser } = useUserStore();
