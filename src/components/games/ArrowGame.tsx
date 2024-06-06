@@ -107,7 +107,7 @@ class Arrow {
       this.win = false;
       this.newActual();
       this.score++;
-      this.playSoundEffect("/sound.wav");
+      this.playSoundEffect("/hit.wav");
       if (!this.time) {
         this.time = Date.now();
       }
@@ -115,7 +115,7 @@ class Arrow {
       return;
     } else {
       this.life--;
-      this.playHurtEffect("/hurt.mp3");
+      this.playHurtEffect("/damage.wav");
       if (this.life == 0) {
         this.gameOver();
       }

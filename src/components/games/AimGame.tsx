@@ -1,7 +1,6 @@
 import { useUserStore } from "@/store";
 import { useRef, useEffect } from "react";
 
-
 interface Iposition {
   x: number;
   y: number;
@@ -95,7 +94,7 @@ const AimGame = () => {
           const AudioClass =
             typeof window !== "undefined" ? window.Audio : null;
 
-          let scoreSound = AudioClass ? new AudioClass("/sound.wav") : null;
+          let scoreSound = AudioClass ? new AudioClass("/arrow.wav") : null;
           scoreSound?.addEventListener("ended", () => {
             scoreSound = null;
           });
