@@ -1,14 +1,78 @@
-import api from "@/services/axios";
-import { useGameStatusStore, useUserStore } from "@/store";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { destroyCookie, parseCookies } from "nookies";
-import { useEffect } from "react";
-
+import api from "@/services/axios";
+import { useGameStatusStore, useUserStore } from "@/store";
 import { EditProfile, gamesData, gamesInfo, GameCard } from "@/components";
 import { FaArrowRotateRight } from "react-icons/fa6";
 
+interface GameStats {
+  name: string;
+  maxPoints: number;
+  playCount: number;
+  averagePoints: number;
+}
+
+interface UserPoint {
+  game: {
+    name: string;
+  };
+  points: number;
+}
+
+const initializeGameStatus = (
+  setGameStart: (value: boolean) => void,
+  setFinalScreen: (value: boolean) => void,
+  setGameScore: (value: number) => void,
+  setGameFinished: (value: boolean) => void,
+) => {
+  setGameStart(false);
+  setFinalScreen(false);
+  setGameScore(0);
+  setGameFinished(false);
+};
+
+const fetchUserProfile = async (
+  token: string,
+  setUser: (user: any) => void,
+  setLoadingData: (value: boolean) => void,
+  router: any,
+) => {
+  try {
+    setLoadingData(true);
+    api.defaults.headers.common.Authorization = `Bearer ${token}`;
+    const response = await api.get("/users/profile");
+    setUser(response.data);
+  } catch (error) {
+    console.error(error);
+    setUser(null);
+    destroyCookie(null, "h-benchmark");
+    router.push("/");
+  } finally {
+    setLoadingData(false);
+  }
+};
+
+const calculateGameStats = (userPoints: UserPoint[]): GameStats[] => {
+  const hashMap = new Map<string, number[]>();
+
+  userPoints.forEach(({ game: { name }, points }) => {
+    if (!hashMap.has(name)) {
+      hashMap.set(name, []);
+    }
+    hashMap.get(name)!.push(points);
+  });
+
+  return Array.from(hashMap.entries()).map(([name, points]) => ({
+    name,
+    maxPoints: Math.max(...points),
+    playCount: points.length,
+    averagePoints:
+      points.reduce((sum, value) => sum + value, 0) / points.length,
+  }));
+};
+
 const Profile = () => {
-  // verificar se o user existe, caso nao fazer a requisição
   const { user, loadingData, setUser, setLoadingData } = useUserStore();
   const { setFinalScreen, setGameStart, setGameScore, setGameFinished } =
     useGameStatusStore();
@@ -17,44 +81,25 @@ const Profile = () => {
   const token = cookies["h-benchmark"];
 
   useEffect(() => {
-    const fetcher = async () => {
-      try {
-        setLoadingData(true);
-        api.defaults.headers.common.Authorization = `Bearer ${token}`;
-        const response = await api.get("/users/profile");
-        setUser(response.data);
-      } catch (error) {
-        console.error(error);
-        setUser(null);
-        destroyCookie(null, "h-benchmark");
-        router.push("/");
-      } finally {
-        setLoadingData(false);
-      }
-    };
-
-    const teste = () => {
-      setGameStart(false);
-      setFinalScreen(false);
-      setGameScore(0);
-      setGameFinished(false);
-    };
-
-    teste();
-    fetcher();
-    setFinalScreen(false);
+    initializeGameStatus(
+      setGameStart,
+      setFinalScreen,
+      setGameScore,
+      setGameFinished,
+    );
+    fetchUserProfile(token, setUser, setLoadingData, router);
   }, [
     router,
+    setFinalScreen,
+    setGameFinished,
+    setGameScore,
+    setGameStart,
     setLoadingData,
     setUser,
     token,
-    setFinalScreen,
-    setGameStart,
-    setGameScore,
-    setGameFinished,
   ]);
 
-  if (loadingData)
+  if (loadingData) {
     return (
       <div className="mt-11 flex h-[calc(100vh-2.75rem)] w-full items-center justify-center bg-lime3">
         <div className="flex items-center gap-2">
@@ -65,57 +110,13 @@ const Profile = () => {
         </div>
       </div>
     );
+  }
 
   if (user) {
     const firstName = user.name.split(" ")[0];
-
-    let hashMap = new Map<string, number[]>();
-
-    if (user.user_points) {
-      user.user_points.forEach(
-        (userPoint: { game: { name: string }; points: number }) => {
-          const gameName: string = userPoint.game.name;
-          const points: number = userPoint.points;
-
-          if (!hashMap.has(gameName)) {
-            hashMap.set(gameName, []);
-          }
-
-          hashMap.get(gameName)!.push(points);
-        },
-      );
-    }
-
-    interface GameStats {
-      name: string;
-      maxPoints: number;
-      playCount: number;
-      averagePoints: number;
-    }
-
-    const calculateGameStats = (
-      hashMap: Map<string, number[]>,
-    ): GameStats[] => {
-      const gameStatsArray: GameStats[] = [];
-
-      hashMap.forEach((points, gameName) => {
-        const maxPoints = Math.max(...points);
-        const playCount = points.length;
-        const averagePoints =
-          points.reduce((sum, value) => sum + value, 0) / playCount;
-
-        gameStatsArray.push({
-          name: gameName,
-          maxPoints,
-          playCount,
-          averagePoints,
-        });
-      });
-
-      return gameStatsArray;
-    };
-
-    const gameStats = calculateGameStats(hashMap);
+    const gameStats = user.user_points
+      ? calculateGameStats(user.user_points)
+      : [];
 
     return (
       <main className="flex flex-col gap-4">

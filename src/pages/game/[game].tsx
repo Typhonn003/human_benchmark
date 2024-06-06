@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/router";
 import { useGameStatusStore, useUserStore } from "@/store";
 import { Button, gamesData } from "@/components";
@@ -12,6 +12,7 @@ interface IGameInfo {
 const Game = () => {
   const router = useRouter();
   const gameName = router.query.game as string | undefined;
+
   const {
     gameStart,
     setGameStart,
@@ -22,11 +23,12 @@ const Game = () => {
     finalScreen,
     setFinalScreen,
   } = useGameStatusStore();
+
   const { user } = useUserStore();
   const [gameId, setGameId] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchGameId = async () => {
+    const fetchGameId = async (gameName: string) => {
       try {
         const response = await api.get("/games");
         const serverData: IGameInfo[] = response.data.data;
@@ -40,37 +42,44 @@ const Game = () => {
     };
 
     if (gameName) {
-      fetchGameId();
+      fetchGameId(gameName);
     }
-    if (gameFinished) {
-      const sendScore = async () => {
-        try {
-          await api.post("/scores", {
-            user_id: user?.id,
-            game_id: gameId,
-            points: gameScore,
-          });
-        } catch (error) {
-          console.error(error);
-        } finally {
-          setGameFinished(false);
-        }
-      };
-      sendScore();
+  }, [gameName]);
+
+  useEffect(() => {
+    const sendGameScore = async (
+      userId: string,
+      gameId: string,
+      gameScore: number,
+    ) => {
+      try {
+        await api.post("/scores", {
+          user_id: userId,
+          game_id: gameId,
+          points: gameScore,
+        });
+        setGameFinished(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (gameFinished && gameId && user) {
+      sendGameScore(user.id, gameId, gameScore);
     }
-  }, [gameName, gameFinished, gameId, gameScore, user, setGameFinished]);
+  }, [gameFinished, gameId, gameScore, setGameFinished, user]);
+
+  const handleGameRestart = useCallback(() => {
+    setGameScore(0);
+    setGameStart(false);
+    setFinalScreen(false);
+  }, [setGameScore, setGameStart, setFinalScreen]);
 
   if (!gameName || !["arrow", "aim", "reaction"].includes(gameName)) {
     return null;
   }
 
   const { gameComponent, icon, name, instructions } = gamesData[gameName];
-
-  const handleGameRestart = () => {
-    setGameScore(0);
-    setGameStart(false);
-    setFinalScreen(false);
-  };
 
   return (
     <main className="flex h-screen items-center justify-center bg-lime3">
