@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react";
+import { useGameStatusStore } from "@/store";
 
 class Arrow {
   size: number;
@@ -163,11 +164,24 @@ class Arrow {
     return;
   }
 
-  drawWin(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
+  drawWin(
+    ctx: CanvasRenderingContext2D,
+    canvas: HTMLCanvasElement,
+    setGameFinished: (value: boolean) => void,
+    setGameScore: (value: number) => void,
+    setFinalScreen: (value: boolean) => void,
+  ) {
+    setGameScore(this.lastScore);
+    setGameFinished(true);
+    setFinalScreen(true);
+    this.finishGame();
+    this.win = false;
     ctx.fillStyle = "#37401C";
     ctx.font = "20px serif";
 
-    let textContent = `Sua pontuação de ${this.lastScore} foi enviada!`;
+    let textContent;
+    textContent = `Sua pontuação de ${this.lastScore} foi salva!`;
+
     let textSize = Math.floor(ctx.measureText(textContent).width);
 
     ctx.fillText(
@@ -177,7 +191,7 @@ class Arrow {
     );
 
     ctx.font = "12px serif";
-    textContent = "Aperte a seta correspondente para jogar novamente :D";
+    textContent = "Aperte a seta correspondente para jogar novamente";
     textSize = Math.floor(ctx.measureText(textContent).width);
 
     ctx.fillText(
@@ -209,16 +223,19 @@ class Arrow {
 }
 
 const ArrowGame = () => {
+  const { setGameFinished, setGameScore, setFinalScreen } =
+    useGameStatusStore();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [arrow, setArrow] = useState<Arrow | null>(null);
   const cleanScreen = (context: CanvasRenderingContext2D) => {
     context.fillStyle = "#bdee63";
     context.fillRect(0, 0, context.canvas.width, context.canvas.height);
-    //context.clearRect(0, 0, context.canvas.width, context.canvas.height);
   };
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    let animationFrameId: number = 0;
+
     if (canvas) {
       const ctx = canvas.getContext("2d");
       if (ctx) {
@@ -252,21 +269,30 @@ const ArrowGame = () => {
                 arrow.finishGame();
               }
               if (arrow.win) {
-                arrow.drawWin(ctx, canvas);
+                arrow.drawWin(
+                  ctx,
+                  canvas,
+                  setGameFinished,
+                  setGameScore,
+                  setFinalScreen,
+                );
               }
             }
           }
-          requestAnimationFrame(animate);
+          animationFrameId = requestAnimationFrame(animate);
         };
 
         animate();
 
         return () => {
+          //Replicar isso nos outros
+          cancelAnimationFrame(animationFrameId);
           window.removeEventListener("keydown", handleKeyPress);
+          console.log("desmontou");
         };
       }
     }
-  }, []);
+  }, [setFinalScreen, setGameFinished, setGameScore]);
 
   return (
     <canvas ref={canvasRef} width={500} height={500} className="rounded-md" />
