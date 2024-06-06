@@ -3,6 +3,7 @@ import { useGameStatusStore } from "@/store";
 
 import { Button, gamesData } from "@/components";
 import { useEffect } from "react";
+import api from "@/services/axios";
 
 const Game = () => {
   const router = useRouter();
@@ -11,6 +12,16 @@ const Game = () => {
 
   useEffect(() => {
     setGameStart(false);
+    const teste = async () => {
+      try {
+        const response = await api.get("/games/");
+        const gameId = response.data.data.filter(element => element.name == gameName)
+        console.log(response.data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    teste()
   }, [setGameStart]);
 
   if (!gameName || !["arrow", "aim", "reaction"].includes(gameName)) {

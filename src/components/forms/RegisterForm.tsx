@@ -44,6 +44,7 @@ const RegisterForm = () => {
     } finally {
     }
   };
+  
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>

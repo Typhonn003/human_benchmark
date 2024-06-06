@@ -1,4 +1,6 @@
+import { useUserStore } from "@/store";
 import { useRef, useEffect } from "react";
+
 
 interface Iposition {
   x: number;
@@ -51,6 +53,7 @@ class Circle {
 }
 
 const AimGame = () => {
+  const { user } = useUserStore();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   let score = 0;
   const circle = useRef<Circle | null>(null);
