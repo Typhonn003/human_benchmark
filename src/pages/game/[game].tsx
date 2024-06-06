@@ -2,11 +2,16 @@ import { useRouter } from "next/router";
 import { useGameStatusStore } from "@/store";
 
 import { Button, gamesData } from "@/components";
+import { useEffect } from "react";
 
 const Game = () => {
   const router = useRouter();
   const gameName = router.query.game as string | undefined;
   const { gameStart, setGameStart } = useGameStatusStore();
+
+  useEffect(() => {
+    setGameStart(false);
+  }, [setGameStart]);
 
   if (!gameName || !["arrow", "aim", "reaction"].includes(gameName)) {
     //Redirecionar para a pagina 404 caso o jogo não exista
