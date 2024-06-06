@@ -1,5 +1,5 @@
 import api from "@/services/axios";
-import { useUserStore } from "@/store";
+import { useGameStatusStore, useUserStore } from "@/store";
 import { useRouter } from "next/router";
 import { destroyCookie, parseCookies } from "nookies";
 import { useEffect } from "react";
@@ -8,7 +8,10 @@ import { EditProfile, gamesData, gamesInfo, GameCard } from "@/components";
 import { FaArrowRotateRight } from "react-icons/fa6";
 
 const Profile = () => {
+  // verificar se o user existe, caso nao fazer a requisição
   const { user, loadingData, setUser, setLoadingData } = useUserStore();
+  const { setFinalScreen, setGameStart, setGameScore, setGameFinished } =
+    useGameStatusStore();
   const router = useRouter();
   const cookies = parseCookies();
   const token = cookies["h-benchmark"];
@@ -30,8 +33,26 @@ const Profile = () => {
       }
     };
 
+    const teste = () => {
+      setGameStart(false);
+      setFinalScreen(false);
+      setGameScore(0);
+      setGameFinished(false);
+    };
+
+    teste();
     fetcher();
-  }, [router, setLoadingData, setUser, token]);
+    setFinalScreen(false);
+  }, [
+    router,
+    setLoadingData,
+    setUser,
+    token,
+    setFinalScreen,
+    setGameStart,
+    setGameScore,
+    setGameFinished,
+  ]);
 
   if (loadingData)
     return (

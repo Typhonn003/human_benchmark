@@ -1,13 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { useUserStore } from "@/store";
-import { IUserProfile } from "@/interfaces/user.interface";
-import api from "@/services/axios";
-
-interface PostScore {
-  user_id: string;
-  game_id: string;
-  points: number;
-}
+import { useGameStatusStore } from "@/store";
 
 class Arrow {
   size: number;
@@ -175,18 +167,20 @@ class Arrow {
   drawWin(
     ctx: CanvasRenderingContext2D,
     canvas: HTMLCanvasElement,
-    user: IUserProfile | null,
+    setGameFinished: (value: boolean) => void,
+    setGameScore: (value: number) => void,
+    setFinalScreen: (value: boolean) => void,
   ) {
+    setGameScore(this.lastScore);
+    setGameFinished(true);
+    setFinalScreen(true);
+    this.finishGame();
+    this.win = false;
     ctx.fillStyle = "#37401C";
     ctx.font = "20px serif";
 
     let textContent;
-    if (user) {
-      this.sendScore(user);
-      textContent = `Sua pontuação de ${this.lastScore} foi salva!`;
-    } else {
-      textContent = `Sua pontuação é de ${this.lastScore}!`;
-    }
+    textContent = `Sua pontuação de ${this.lastScore} foi salva!`;
 
     let textSize = Math.floor(ctx.measureText(textContent).width);
 
@@ -205,21 +199,6 @@ class Arrow {
       (canvas.width - textSize) / 2,
       canvas.height - 40,
     );
-  }
-
-  async sendScore(user: IUserProfile) {
-    const data: PostScore = {
-      game_id: user.id,
-      user_id: user.id,
-      points: this.lastScore,
-    };
-
-    try {
-      const response = await api.post("/scores/", data);
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
   }
 
   playSoundEffect(src: string) {
@@ -244,17 +223,19 @@ class Arrow {
 }
 
 const ArrowGame = () => {
-  const { user } = useUserStore();
+  const { setGameFinished, setGameScore, setFinalScreen } =
+    useGameStatusStore();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [arrow, setArrow] = useState<Arrow | null>(null);
   const cleanScreen = (context: CanvasRenderingContext2D) => {
     context.fillStyle = "#bdee63";
     context.fillRect(0, 0, context.canvas.width, context.canvas.height);
-    //context.clearRect(0, 0, context.canvas.width, context.canvas.height);
   };
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    let animationFrameId: number = 0;
+
     if (canvas) {
       const ctx = canvas.getContext("2d");
       if (ctx) {
@@ -288,21 +269,30 @@ const ArrowGame = () => {
                 arrow.finishGame();
               }
               if (arrow.win) {
-                arrow.drawWin(ctx, canvas, user);
+                arrow.drawWin(
+                  ctx,
+                  canvas,
+                  setGameFinished,
+                  setGameScore,
+                  setFinalScreen,
+                );
               }
             }
           }
-          requestAnimationFrame(animate);
+          animationFrameId = requestAnimationFrame(animate);
         };
 
         animate();
 
         return () => {
+          //Replicar isso nos outros
+          cancelAnimationFrame(animationFrameId);
           window.removeEventListener("keydown", handleKeyPress);
+          console.log("desmontou");
         };
       }
     }
-  }, []);
+  }, [setFinalScreen, setGameFinished, setGameScore]);
 
   return (
     <canvas ref={canvasRef} width={500} height={500} className="rounded-md" />
