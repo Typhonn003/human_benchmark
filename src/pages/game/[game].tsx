@@ -2,26 +2,36 @@ import { useRouter } from "next/router";
 import { useGameStatusStore } from "@/store";
 
 import { Button, gamesData } from "@/components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import api from "@/services/axios";
+
+interface IGameServer {
+  id: string;
+  name: string;
+}
 
 const Game = () => {
   const router = useRouter();
+  const [stateGameId, setStateGameId] = useState<string | null>(null);
   const gameName = router.query.game as string | undefined;
-  const { gameStart, setGameStart } = useGameStatusStore();
+  const { gameStart, setGameStart, gameId, setGameId } = useGameStatusStore();
+
+  const teste = async () => {
+    try {
+      const response = await api.get("/games/");
+      const serverData: IGameServer[] = response.data.data;
+      const gameInfo = serverData.filter((element) => element.name == gameName);
+      console.log(stateGameId);
+      setStateGameId(gameInfo[0].id);
+      console.log(stateGameId);
+      console.log(gameInfo[0].id);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     setGameStart(false);
-    const teste = async () => {
-      try {
-        const response = await api.get("/games/");
-        const gameId = response.data.data.filter(element => element.name == gameName)
-        console.log(response.data.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    teste()
   }, [setGameStart]);
 
   if (!gameName || !["arrow", "aim", "reaction"].includes(gameName)) {
@@ -30,6 +40,11 @@ const Game = () => {
   }
 
   const { gameComponent, icon, name, instructions } = gamesData[gameName];
+
+  if (gameStart && !stateGameId) {
+    console.log("entrei");
+    teste();
+  }
 
   return (
     <main className="flex h-screen items-center justify-center bg-lime3">
