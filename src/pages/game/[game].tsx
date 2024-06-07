@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useGameStatusStore, useUserStore } from "@/store";
 import { Button, gamesData } from "@/components";
 import api from "@/services/axios";
+import { useIsMobile } from "@/hooks";
 
 interface IGameInfo {
   name: string;
@@ -23,7 +24,7 @@ const Game = () => {
     finalScreen,
     setFinalScreen,
   } = useGameStatusStore();
-
+  const isMobile = useIsMobile();
   const { user } = useUserStore();
   const [gameId, setGameId] = useState<string | null>(null);
 
@@ -83,7 +84,13 @@ const Game = () => {
 
   return (
     <main className="flex h-screen items-center justify-center bg-lime3">
-      {!gameStart ? (
+      {isMobile ? (
+        <div className="container-width max-w-72 rounded-md bg-lime9 p-6">
+          <p className="text-center text-lg font-semibold text-lime12">
+            Não é possível jogar em dispositivos moveis
+          </p>
+        </div>
+      ) : !gameStart ? (
         <div className="flex h-[500px] w-[500px] flex-col items-center justify-center gap-2 rounded-md bg-lime9">
           <div className="text-9xl">{icon}</div>
           <h3 className="text-3xl font-bold text-lime12 animate-in">{name}</h3>
