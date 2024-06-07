@@ -65,7 +65,7 @@ const calculateGameStats = (userPoints: UserPoint[]): GameStats[] => {
 
   return Array.from(hashMap.entries()).map(([name, points]) => ({
     name,
-    maxPoints: Math.max(...points),
+    maxPoints: name == "arrow" ? Math.max(...points) : Math.min(...points),
     playCount: points.length,
     averagePoints:
       points.reduce((sum, value) => sum + value, 0) / points.length,

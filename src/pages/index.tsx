@@ -21,6 +21,14 @@ const Home = () => {
   const token = cookies["h-benchmark"];
   const { user } = useUserStore();
 
+  const goPlay = () => {
+    const names = gamesInfo.map((element) => {
+      return element.name;
+    });
+    const index = Math.floor(Math.random() * names.length);
+    router.push(`/game/${names[index]}`);
+  };
+
   if (user || token) {
     router.push("/profile");
   }
@@ -39,10 +47,12 @@ const Home = () => {
               <p className="text-right">Supere seus limites.</p>
             </div>
             <div className="z-10 flex w-full flex-col justify-between gap-2 smartphone:flex-row smartphone:justify-start tablet:flex-col  laptop:flex-row">
-              <Button size="lg">Iniciar</Button>
-              <Button size="lg" variant="outline">
-                Ver resultados detalhados
+              <Button size="lg" onClick={goPlay}>
+                Iniciar
               </Button>
+              {
+                //<Button size="lg" variant="outline">Ver resultados detalhados</Button>
+              }
             </div>
             <div className="absolute -top-4 h-48 w-48 animate-spin-slow rounded-full bg-lime4 smartphone:-top-6 smartphone:h-56 smartphone:w-56 tablet:h-64 tablet:w-64 laptop:-top-4 laptop:left-20 laptop:h-72 laptop:w-72 desktop:-top-4 desktop:left-28 desktop:h-80 desktop:w-80">
               <div className="absolute -bottom-5 -right-5 h-24 w-24 rounded-full bg-lime5 smartphone:h-32 smartphone:w-32 laptop:h-40 laptop:w-40 desktop:h-48 desktop:w-48" />

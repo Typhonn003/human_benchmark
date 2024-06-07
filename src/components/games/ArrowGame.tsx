@@ -35,7 +35,7 @@ class Arrow {
     this.now = 0;
     this.win = false;
     this.lastScore = 0;
-    this.gameTime = 5; //no final colocar 30s
+    this.gameTime = 10;
   }
 
   update(
@@ -107,7 +107,7 @@ class Arrow {
       this.win = false;
       this.newActual();
       this.score++;
-      this.playSoundEffect("/sound.wav");
+      this.playSoundEffect("/hit.wav");
       if (!this.time) {
         this.time = Date.now();
       }
@@ -115,7 +115,7 @@ class Arrow {
       return;
     } else {
       this.life--;
-      this.playHurtEffect("/hurt.mp3");
+      this.playHurtEffect("/damage.wav");
       if (this.life == 0) {
         this.gameOver();
       }

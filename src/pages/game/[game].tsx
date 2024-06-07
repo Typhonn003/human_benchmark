@@ -94,7 +94,6 @@ const Game = () => {
             <Button variant="outline" onClick={() => setGameStart(true)}>
               Iniciar
             </Button>
-            <Button variant="outline">Ver resultados</Button>
           </div>
         </div>
       ) : finalScreen ? (

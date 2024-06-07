@@ -38,7 +38,7 @@ const gamesData: GameData = {
     icon: <GiArcheryTarget />,
     name: "Teste de Precisão",
     instructions:
-      "Use o mouse para acertar 30 alvos na tela o mais rápido possível.",
+      "Use o mouse para acertar 20 alvos na tela o mais rápido possível.",
   },
   reaction: {
     gameComponent: <ReactionGame />,

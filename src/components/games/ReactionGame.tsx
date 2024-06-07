@@ -55,20 +55,18 @@ class ReactionClass {
     );
   }
 
-  writeFinal(color: string = "#37401C", size: number = 24) {
-    this.ctx.fillStyle = color;
-    this.ctx.font = `${size}px serif`;
+  writeFinal(
+    setGameFinished: (value: boolean) => void,
+    setGameScore: (value: number) => void,
+    setFinalScreen: (value: boolean) => void,
+  ) {
+    setFinalScreen(true);
+    setGameFinished(true);
     const total =
       this.scores.reduce(function (accumulator, value) {
         return accumulator + value;
       }, 0) / this.scores.length;
-    const text = `Tempo médio: ${total.toFixed(3)}s`;
-    const textSize = Math.floor(this.ctx.measureText(text).width);
-    this.ctx.fillText(
-      text,
-      (this.ctx.canvas.width - textSize) / 2,
-      this.ctx.canvas.height * 0.75,
-    );
+    setGameScore(parseFloat(total.toFixed(3)));
   }
 
   click() {
@@ -115,12 +113,14 @@ class ReactionClass {
 }
 
 const ReactionGame = () => {
-  const { setGameStart } = useGameStatusStore();
+  const { setGameFinished, setFinalScreen, setGameScore } =
+    useGameStatusStore();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const ctxRef = useRef<CanvasRenderingContext2D | null>(null);
   const reactionRef = useRef<ReactionClass | null>(null);
 
   useEffect(() => {
+    let animationFrameId: number = 0;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -141,11 +141,6 @@ const ReactionGame = () => {
       clearScreen();
       if (reactionRef.current && ctxRef.current) {
         switch (reactionRef.current.state) {
-          /*case "init":
-            reactionRef.current.writeOnScreen("Click na tela para iniciar");
-            reactionRef.current.writeStage("black", 40);
-            break;
-            */
           case "waiting":
             reactionRef.current.fillScreen("#0090FF");
             reactionRef.current.writeOnScreen(
@@ -182,21 +177,23 @@ const ReactionGame = () => {
             reactionRef.current.writeOnScreen(`Seu tempo foi de ${deltaTime}s`);
             reactionRef.current.writeStage("black", 40);
             if (reactionRef.current.playTime == 3) {
-              reactionRef.current.writeFinal();
+              reactionRef.current.writeFinal(
+                setGameFinished,
+                setGameScore,
+                setFinalScreen,
+              );
             } else {
               reactionRef.current.writeNotFinal();
             }
             break;
           case "final":
-            setGameStart(false);
-
-            //reactionRef.current.writeFinal();
+            console.log("final");
             break;
           default:
             break;
         }
         if (reactionRef.current.state != "final") {
-          requestAnimationFrame(animate);
+          animationFrameId = requestAnimationFrame(animate);
         }
       }
     };
@@ -213,6 +210,7 @@ const ReactionGame = () => {
 
     return () => {
       canvas.removeEventListener("click", handleClick);
+      cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
