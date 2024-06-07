@@ -29,7 +29,7 @@ class Circle {
     this.old = 0;
     this.now = 0;
     this.score = 0;
-    this.maxScore = 30;
+    this.maxScore = 20;
   }
 
   draw() {
@@ -111,6 +111,8 @@ class Circle {
     this.now = 0;
     this.score = 0;
   }
+
+  initMessage() {}
 }
 
 const AimGame = () => {

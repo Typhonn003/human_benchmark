@@ -35,7 +35,7 @@ class Arrow {
     this.now = 0;
     this.win = false;
     this.lastScore = 0;
-    this.gameTime = 5; //no final colocar 30s
+    this.gameTime = 10;
   }
 
   update(
