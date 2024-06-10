@@ -50,7 +50,7 @@ const Profile = () => {
 
   if (loadingData) {
     return (
-      <div className="mt-11 flex h-[calc(100vh-2.75rem)] w-full items-center justify-center bg-lime3">
+      <div className="screen-height-without-header flex w-full items-center justify-center bg-lime3">
         <div className="flex items-center gap-2">
           <p>Carregando</p>
           <span className="animate-spin">

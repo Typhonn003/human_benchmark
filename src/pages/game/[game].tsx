@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/router";
 import { useGameStatusStore, useUserStore } from "@/store";
-import { Button, gamesData } from "@/components";
+import { Button, GameCard, gamesData, gamesInfo } from "@/components";
 import api from "@/services/axios";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
@@ -80,13 +80,35 @@ const Game = ({ isMobile }: { isMobile: boolean }) => {
   }, [setGameScore, setGameStart, setFinalScreen]);
 
   if (!gameName || !["arrow", "aim", "reaction"].includes(gameName)) {
-    return null;
+    return (
+      <main className="screen-height-without-header flex flex-col items-center justify-evenly bg-lime2 tablet:justify-center tablet:gap-4">
+        <h2 className="text-xl font-medium text-lime12 tablet:text-3xl">
+          Jogo não encontrado
+        </h2>
+        <h3 className="text-base font-medium text-lime11 tablet:text-xl">
+          Mas que tal experimentar um desses?
+        </h3>
+        <div className="container-width">
+          <ul className="flex flex-col gap-4 tablet:grid tablet:grid-cols-2 laptop:grid-cols-3">
+            {gamesInfo.map(({ icon, name, description, title }) => (
+              <GameCard
+                key={name}
+                icon={icon}
+                title={title}
+                name={name}
+                description={description}
+              />
+            ))}
+          </ul>
+        </div>
+      </main>
+    );
   }
 
   const { gameComponent, icon, name, instructions } = gamesData[gameName];
 
   return (
-    <main className="flex h-screen items-center justify-center bg-lime3">
+    <main className="screen-height-without-header flex items-center justify-center bg-lime3">
       {isMobile ? (
         <div className="container-width max-w-72 rounded-md bg-lime9 p-6">
           <p className="text-center text-lg font-semibold text-lime12">

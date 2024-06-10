@@ -80,6 +80,10 @@
     @apply mx-auto w-[90%] xl:w-[70%];
   }
 
+  .screen-height-without-header {
+    @apply mt-11 h-[calc(100vh-2.75rem)];
+  }
+
   .card-animation {
     @apply transform transition hover:-translate-y-2 motion-reduce:transition-none motion-reduce:hover:transform-none;
   }
