@@ -3,14 +3,14 @@ import { useRouter } from "next/router";
 import { useGameStatusStore, useUserStore } from "@/store";
 import { Button, gamesData } from "@/components";
 import api from "@/services/axios";
-import { useIsMobile } from "@/hooks";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 interface IGameInfo {
   name: string;
   id: string;
 }
 
-const Game = () => {
+const Game = ({ isMobile }: { isMobile: boolean }) => {
   const router = useRouter();
   const gameName = router.query.game as string | undefined;
 
@@ -24,8 +24,7 @@ const Game = () => {
     finalScreen,
     setFinalScreen,
   } = useGameStatusStore();
-  const isMobile = useIsMobile();
-  const { user } = useUserStore();
+  const { user, fetch } = useUserStore();
   const [gameId, setGameId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -69,6 +68,10 @@ const Game = () => {
       sendGameScore(user.id, gameId, gameScore);
     }
   }, [gameFinished, gameId, gameScore, setGameFinished, user]);
+
+  useEffect(() => {
+    fetch();
+  }, [fetch]);
 
   const handleGameRestart = useCallback(() => {
     setGameScore(0);
@@ -122,6 +125,23 @@ const Game = () => {
       )}
     </main>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext,
+) => {
+  let isMobile: boolean = false;
+  const userAgent = context.req.headers["user-agent"];
+
+  if (userAgent) {
+    isMobile = /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(
+      userAgent,
+    );
+  }
+
+  return {
+    props: { isMobile },
+  };
 };
 
 export default Game;

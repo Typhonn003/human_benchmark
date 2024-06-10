@@ -11,6 +11,7 @@ interface useGameStatusStoreProps {
   setGameScore: (value: number) => void;
   finalScreen: boolean;
   setFinalScreen: (value: boolean) => void;
+  restartGameStats: () => void;
 }
 
 const useGameStatusStore = create<useGameStatusStoreProps>((set) => ({
@@ -24,6 +25,12 @@ const useGameStatusStore = create<useGameStatusStoreProps>((set) => ({
   setGameScore: (value) => set(() => ({ gameScore: value })),
   finalScreen: false,
   setFinalScreen: (value) => set(() => ({ finalScreen: value })),
+  restartGameStats: () => {
+    set({ gameStart: false });
+    set({ gameFinished: false });
+    set({ finalScreen: false });
+    set({ gameScore: 0 });
+  },
 }));
 
 export { useGameStatusStore };

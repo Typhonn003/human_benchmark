@@ -6,10 +6,10 @@ import { useRouter } from "next/router";
 import { Button } from "@/components";
 
 const Header = () => {
-  const { user, setUser } = useUserStore();
+  const { user, destroyUser } = useUserStore();
   const router = useRouter();
   const handleLogout = () => {
-    setUser(null);
+    destroyUser();
     destroyCookie(null, "h-benchmark");
     router.push("/");
   };

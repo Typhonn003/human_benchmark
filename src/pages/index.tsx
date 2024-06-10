@@ -1,6 +1,6 @@
-import { useUserStore } from "@/store";
+import { useGameStatusStore, useUserStore } from "@/store";
 import { useRouter } from "next/router";
-import { parseCookies } from "nookies";
+import { useEffect } from "react";
 
 import {
   Button,
@@ -17,20 +17,28 @@ import {
 
 const Home = () => {
   const router = useRouter();
-  const cookies = parseCookies();
-  const token = cookies["h-benchmark"];
-  const { user } = useUserStore();
+  const restartGameStats = useGameStatusStore(
+    (state) => state.restartGameStats,
+  );
+  const { user, fetch } = useUserStore();
+
+  useEffect(() => {
+    restartGameStats();
+    fetch();
+  }, [fetch, restartGameStats]);
 
   const goPlay = () => {
     const names = gamesInfo.map((element) => {
       return element.name;
     });
+
     const index = Math.floor(Math.random() * names.length);
     router.push(`/game/${names[index]}`);
   };
 
-  if (user || token) {
+  if (user) {
     router.push("/profile");
+    return null;
   }
 
   return (

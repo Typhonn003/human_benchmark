@@ -4,18 +4,18 @@ export interface IUserProfile {
   email: string;
   role: string;
   active: boolean;
-  user_points: UserPoint[];
+  user_points: IUserPoint[];
 }
 
-interface UserPoint {
+interface IUserPoint {
   id: string;
   user_id: string;
   game_id: string;
   points: number;
-  game: Game;
+  game: IGame;
 }
 
-interface Game {
+interface IGame {
   id: string;
   name: string;
 }

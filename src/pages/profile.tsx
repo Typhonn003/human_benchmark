@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { destroyCookie, parseCookies } from "nookies";
-import api from "@/services/axios";
 import { useGameStatusStore, useUserStore } from "@/store";
+
 import { EditProfile, gamesData, gamesInfo, GameCard } from "@/components";
 import { FaArrowRotateRight } from "react-icons/fa6";
 
@@ -19,39 +18,6 @@ interface UserPoint {
   };
   points: number;
 }
-
-const initializeGameStatus = (
-  setGameStart: (value: boolean) => void,
-  setFinalScreen: (value: boolean) => void,
-  setGameScore: (value: number) => void,
-  setGameFinished: (value: boolean) => void,
-) => {
-  setGameStart(false);
-  setFinalScreen(false);
-  setGameScore(0);
-  setGameFinished(false);
-};
-
-const fetchUserProfile = async (
-  token: string,
-  setUser: (user: any) => void,
-  setLoadingData: (value: boolean) => void,
-  router: any,
-) => {
-  try {
-    setLoadingData(true);
-    api.defaults.headers.common.Authorization = `Bearer ${token}`;
-    const response = await api.get("/users/profile");
-    setUser(response.data);
-  } catch (error) {
-    console.error(error);
-    setUser(null);
-    destroyCookie(null, "h-benchmark");
-    router.push("/");
-  } finally {
-    setLoadingData(false);
-  }
-};
 
 const calculateGameStats = (userPoints: UserPoint[]): GameStats[] => {
   const hashMap = new Map<string, number[]>();
@@ -73,31 +39,14 @@ const calculateGameStats = (userPoints: UserPoint[]): GameStats[] => {
 };
 
 const Profile = () => {
-  const { user, loadingData, setUser, setLoadingData } = useUserStore();
-  const { setFinalScreen, setGameStart, setGameScore, setGameFinished } =
-    useGameStatusStore();
+  const { user, loadingData, fetch } = useUserStore();
+  const { restartGameStats } = useGameStatusStore();
   const router = useRouter();
-  const cookies = parseCookies();
-  const token = cookies["h-benchmark"];
 
   useEffect(() => {
-    initializeGameStatus(
-      setGameStart,
-      setFinalScreen,
-      setGameScore,
-      setGameFinished,
-    );
-    fetchUserProfile(token, setUser, setLoadingData, router);
-  }, [
-    router,
-    setFinalScreen,
-    setGameFinished,
-    setGameScore,
-    setGameStart,
-    setLoadingData,
-    setUser,
-    token,
-  ]);
+    restartGameStats();
+    fetch();
+  }, [fetch, restartGameStats]);
 
   if (loadingData) {
     return (
@@ -110,6 +59,11 @@ const Profile = () => {
         </div>
       </div>
     );
+  }
+
+  if (typeof window !== "undefined" && !user) {
+    router.push("/");
+    return null;
   }
 
   if (user) {
