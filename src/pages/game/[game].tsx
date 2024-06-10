@@ -81,7 +81,7 @@ const Game = ({ isMobile }: { isMobile: boolean }) => {
 
   if (!gameName || !["arrow", "aim", "reaction"].includes(gameName)) {
     return (
-      <main className="screen-height-without-header flex flex-col items-center justify-evenly bg-lime2 tablet:justify-center tablet:gap-4">
+      <main className="screen-height-without-header flex flex-col items-center justify-evenly tablet:justify-center tablet:gap-4">
         <h2 className="text-xl font-medium text-lime12 tablet:text-3xl">
           Jogo não encontrado
         </h2>
