@@ -6,8 +6,13 @@ import { useRouter } from "next/router";
 import { Button } from "@/components";
 
 const Header = () => {
-  const { user, setUser } = useUserStore();
+  const { user, destroyUser } = useUserStore();
   const router = useRouter();
+  const handleLogout = () => {
+    destroyUser();
+    destroyCookie(null, "h-benchmark");
+    router.push("/");
+  };
 
   return (
     <header className="fixed top-0 z-20 w-full bg-lime9">
@@ -27,15 +32,7 @@ const Header = () => {
               </Button>
             </li>
             <li>
-              <Button
-                variant="outline"
-                className="h-7"
-                onClick={() => {
-                  setUser(null);
-                  destroyCookie(null, "h-benchmark");
-                  router.push("/");
-                }}
-              >
+              <Button variant="outline" className="h-7" onClick={handleLogout}>
                 Sair
               </Button>
             </li>
