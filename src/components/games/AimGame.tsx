@@ -135,7 +135,7 @@ const AimGame = () => {
 
         if (!circle.current) {
           circle.current = new Circle(50, 50, 20, context);
-          circle.current.update("/shot.png");
+          //circle.current.update("/shot.png");
         }
 
         circle.current.draw();
