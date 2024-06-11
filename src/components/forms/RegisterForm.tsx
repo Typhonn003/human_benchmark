@@ -44,7 +44,7 @@ const RegisterForm = () => {
     } finally {
     }
   };
-  
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
@@ -76,7 +76,7 @@ const RegisterForm = () => {
                   <FormItem>
                     <FormLabel>Nome</FormLabel>
                     <FormControl>
-                      <Input placeholder="Hidrogênio" {...field} />
+                      <Input placeholder="Digite seu nome" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -89,7 +89,7 @@ const RegisterForm = () => {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="hidrogenio@mail.com" {...field} />
+                      <Input placeholder="Digite seu email" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -106,7 +106,7 @@ const RegisterForm = () => {
                     <FormControl>
                       <Input
                         type="password"
-                        placeholder="*********"
+                        placeholder="Digite sua senha"
                         {...field}
                       />
                     </FormControl>
@@ -123,7 +123,7 @@ const RegisterForm = () => {
                     <FormControl>
                       <Input
                         type="password"
-                        placeholder="*********"
+                        placeholder="Confirme sua senha"
                         {...field}
                       />
                     </FormControl>
