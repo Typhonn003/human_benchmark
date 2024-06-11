@@ -20,19 +20,21 @@ const useUserStore = create<useUserStoreProps>((set) => ({
   destroyUser: () => set(() => ({ user: null })),
   fetch: async () => {
     const cookies = parseCookies();
-    const token = cookies["h-benchmark"];
+    const token: string | undefined = cookies["h-benchmark"];
 
-    try {
-      set({ loadingData: true });
-      api.defaults.headers.common.Authorization = `Bearer ${token}`;
-      const response = await api.get("/users/profile");
-      set({ user: response.data });
-    } catch (error) {
-      console.error(error);
-      set({ user: null });
-      destroyCookie(null, "h-benchmark");
-    } finally {
-      set({ loadingData: false });
+    if (token) {
+      try {
+        set({ loadingData: true });
+        api.defaults.headers.common.Authorization = `Bearer ${token}`;
+        const response = await api.get("/users/profile");
+        set({ user: response.data });
+      } catch (error) {
+        console.error(error);
+        set({ user: null });
+        destroyCookie(null, "h-benchmark");
+      } finally {
+        set({ loadingData: false });
+      }
     }
   },
 }));

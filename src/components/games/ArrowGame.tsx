@@ -285,10 +285,8 @@ const ArrowGame = () => {
         animate();
 
         return () => {
-          //Replicar isso nos outros
           cancelAnimationFrame(animationFrameId);
           window.removeEventListener("keydown", handleKeyPress);
-          console.log("desmontou");
         };
       }
     }
