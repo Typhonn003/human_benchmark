@@ -1,6 +1,6 @@
 import { IUserProfile } from "@/interfaces/user.interface";
 import api from "@/services/axios";
-import { parseCookies } from "nookies";
+import { parseCookies, destroyCookie } from "nookies";
 import { create } from "zustand";
 
 interface useUserStoreProps {
@@ -29,6 +29,8 @@ const useUserStore = create<useUserStoreProps>((set) => ({
       set({ user: response.data });
     } catch (error) {
       console.error(error);
+      set({ user: null });
+      destroyCookie(null, "h-benchmark");
     } finally {
       set({ loadingData: false });
     }

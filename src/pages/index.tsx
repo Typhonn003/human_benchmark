@@ -43,20 +43,20 @@ const Home = () => {
 
   return (
     <main className="flex flex-col">
-      <section className="flex items-center bg-lime3 py-16">
-        <div className="container-width desktop:gap-38 flex max-w-96 flex-col items-center gap-5 pt-11 tablet:max-w-full tablet:flex-row laptop:gap-20">
+      <section className="screen-height-without-header flex items-center bg-lime3 tablet:h-auto tablet:py-10">
+        <div className="container-width desktop:gap-38 flex max-w-96 flex-col items-center gap-5 tablet:max-w-full tablet:flex-row ">
           <div className="relative flex w-full flex-col items-center gap-4 tablet:w-2/4 laptop:items-start laptop:gap-8 desktop:w-3/5">
             <h1 className="z-10 text-center text-3xl font-semibold smartphone:text-[2.3rem] tablet:text-[2rem] laptop:text-5xl  desktop:text-6xl">
               Human Benchmark
             </h1>
-            <div className="z-10 hidden w-72 text-xl font-medium text-lime11 smartphone:block laptop:w-full laptop:text-3xl desktop:text-4xl">
+            <div className="z-10 w-72 text-xl font-medium text-lime11 smartphone:block laptop:w-full laptop:text-3xl desktop:text-4xl">
               <p>Se desafie.</p>
               <p className="text-center">Aprimore suas habilidades.</p>
               <p className="text-right">Supere seus limites.</p>
             </div>
             <div className="z-10 flex w-full flex-col justify-between gap-2 smartphone:flex-row smartphone:justify-start tablet:flex-col  laptop:flex-row">
               <Button size="lg" onClick={goPlay}>
-                Iniciar
+                Jogo aleatório
               </Button>
               {
                 //<Button size="lg" variant="outline">Ver resultados detalhados</Button>

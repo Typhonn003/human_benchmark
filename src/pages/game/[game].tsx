@@ -20,9 +20,8 @@ const Game = ({ isMobile }: { isMobile: boolean }) => {
     gameFinished,
     setGameFinished,
     gameScore,
-    setGameScore,
     finalScreen,
-    setFinalScreen,
+    restartGameStats,
   } = useGameStatusStore();
   const { user, fetch } = useUserStore();
   const [gameId, setGameId] = useState<string | null>(null);
@@ -73,15 +72,9 @@ const Game = ({ isMobile }: { isMobile: boolean }) => {
     fetch();
   }, [fetch]);
 
-  const handleGameRestart = useCallback(() => {
-    setGameScore(0);
-    setGameStart(false);
-    setFinalScreen(false);
-  }, [setGameScore, setGameStart, setFinalScreen]);
-
   if (!gameName || !["arrow", "aim", "reaction"].includes(gameName)) {
     return (
-      <main className="screen-height-without-header flex flex-col items-center justify-evenly bg-lime2 tablet:justify-center tablet:gap-4">
+      <main className="screen-height-without-header flex flex-col items-center justify-evenly tablet:justify-center tablet:gap-4">
         <h2 className="text-xl font-medium text-lime12 tablet:text-3xl">
           Jogo não encontrado
         </h2>
@@ -138,7 +131,7 @@ const Game = ({ isMobile }: { isMobile: boolean }) => {
               Pontuação enviada
             </p>
           )}
-          <Button variant="outline" onClick={handleGameRestart}>
+          <Button variant="outline" onClick={() => restartGameStats()}>
             Tentar novamente
           </Button>
         </div>
