@@ -56,7 +56,7 @@ const Home = () => {
             </div>
             <div className="z-10 flex w-full flex-col justify-between gap-2 smartphone:flex-row smartphone:justify-start tablet:flex-col  laptop:flex-row">
               <Button size="lg" onClick={goPlay}>
-                Iniciar
+                Jogo aleatório
               </Button>
               {
                 //<Button size="lg" variant="outline">Ver resultados detalhados</Button>
