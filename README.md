@@ -1,40 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Human Benchmark
 
-## Getting Started
+Bem-vindo ao Human Benchmark, um projeto desenvolvido por [GPMLAD](https://github.com/GPMLAD/) e [Typhonn003](https://github.com/Typhonn003) que oferece uma série de minigames projetados para testar e avaliar diversas habilidades cognitivas dos usuários. Nosso objetivo é proporcionar uma plataforma divertida e interativa onde os usuários possam desafiar a si mesmos e acompanhar seu progresso ao longo do tempo.
 
-First, run the development server:
+## Sobre o projeto
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Desenvolvido utilizando:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- React
+- Next.js (Pages Router)
+- `<canvas>`
+- Tailwind
+- Shadcn ui
+- Radix
+- Zod
+- Zustand
+- Typescript
+- Express
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Design
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+![Home](./docSrc/home.png)
+![Register](./docSrc/register.png)
+![Perfil](./docSrc/perfil.png)
+![Update](./docSrc/update.png)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## 404
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Caso a url esteja errada, as seguintes opções podem aparecer:
+![404 normal](./docSrc/404normal.png)
+![404 games](./docSrc/404games.png)
 
-## Learn More
+## Jogos
 
-To learn more about Next.js, take a look at the following resources:
+Os jogos foram pensados para serem jogados apenas no desktop, utilizando teclado e mouse.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![Mobile](./docSrc/mobile.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Segue abaixo uma amostra dos jogos:
 
-## Deploy on Vercel
+### Direção
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![Arrow](./docSrc/arrow.gif)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Precisão
+
+![Aim](./docSrc/aim.gif)
+
+### Reação
+
+![Reaction](./docSrc/reaction.gif)
+
+## Back-End
+
+A documentação da API pode ser encontrada [aqui!](https://github.com/Typhonn003/human_benchmark_api)
