@@ -40,15 +40,21 @@ Segue abaixo uma amostra dos jogos:
 
 ### Direção
 
-![Arrow](./docSrc/arrow.gif)
+<video width="320" height="240" controls>
+  <source src="./docSrc/arrow.mp4" type="video/mp4">
+</video>
 
 ### Precisão
 
-![Aim](./docSrc/aim.gif)
+<video width="320" height="240" controls>
+  <source src="./docSrc/aim.mp4" type="video/mp4">
+</video>
 
 ### Reação
 
-![Reaction](./docSrc/reaction.gif)
+<video width="320" height="240" controls>
+  <source src="./docSrc/reaction.mp4" type="video/mp4">
+</video>
 
 ## Back-End
 
