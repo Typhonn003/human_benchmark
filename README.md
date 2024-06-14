@@ -17,6 +17,17 @@ Desenvolvido utilizando:
 - Typescript
 - Express
 
+## Instalar dependências:
+
+```bash
+# caso use npm
+npm install
+
+# caso você queira rodar a aplicação localmente
+npm run dev
+
+```
+
 ## Design
 
 ![Home](./docSrc/home.png)
