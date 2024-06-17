@@ -79,16 +79,16 @@ const Game = ({ isMobile }: { isMobile: boolean }) => {
       <main className={`${inter.className} screen-height-without-header`}>
         <div className="container-width flex h-full flex-col items-center justify-center tablet:gap-4">
           <h2
-            className={`${poppins.className} text-center text-xl font-bold text-lime12 tablet:text-3xl`}
+            className={`${poppins.className} text-center text-xl font-medium text-lime12 tablet:text-3xl`}
           >
             Jogo não encontrado
           </h2>
           <h3
-            className={`${poppins.className} text-center text-base font-medium text-lime11 tablet:text-xl`}
+            className={`${poppins.className} text-center text-base text-lime11 tablet:text-xl`}
           >
             Mas que tal experimentar um desses?
           </h3>
-          <ul className="flex flex-col gap-4 tablet:grid tablet:grid-cols-2 laptop:grid-cols-3">
+          <ul className="flex w-full flex-col gap-4 tablet:grid tablet:grid-cols-2 laptop:grid-cols-3">
             {gamesInfo.map(({ icon, name, description, title }) => (
               <GameCard
                 key={name}
@@ -112,17 +112,19 @@ const Game = ({ isMobile }: { isMobile: boolean }) => {
     >
       {isMobile ? (
         <div className="container-width max-w-72 rounded-md bg-lime9 p-6">
-          <p className="text-center text-lg font-semibold text-lime12">
+          <p className="text-center text-lg font-medium text-lime12">
             Não é possível jogar em dispositivos moveis
           </p>
         </div>
       ) : !gameStart ? (
         <div className="flex h-[500px] w-[500px] flex-col items-center justify-center gap-2 rounded-md bg-lime9">
           <div className="text-9xl">{icon}</div>
-          <h3 className="text-3xl font-bold text-lime12 animate-in">{name}</h3>
-          <p className="w-[380px] text-center font-semibold text-lime11">
-            {instructions}
-          </p>
+          <h3
+            className={`${poppins.className} text-3xl font-medium text-lime12`}
+          >
+            {name}
+          </h3>
+          <p className="w-[380px] text-center text-lime11">{instructions}</p>
           <div className="flex gap-2 pt-8">
             <Button variant="outline" onClick={() => setGameStart(true)}>
               Iniciar
@@ -131,13 +133,15 @@ const Game = ({ isMobile }: { isMobile: boolean }) => {
         </div>
       ) : finalScreen ? (
         <div className="flex h-[500px] w-[500px] flex-col items-center justify-center gap-2 rounded-md bg-lime9">
-          <h3 className="text-3xl font-bold text-lime12">Fim de jogo</h3>
-          <p className="text-xl font-semibold text-lime11">Pontuação final</p>
-          <span className="my-4 text-6xl">{gameScore}</span>
+          <h3
+            className={`${poppins.className} text-3xl font-medium text-lime12`}
+          >
+            Fim de jogo
+          </h3>
+          <p className="text-xl text-lime11">Pontuação final</p>
+          <span className="my-4 text-6xl font-medium">{gameScore}</span>
           {user && (
-            <p className="text-lg font-semibold text-lime12">
-              Pontuação enviada
-            </p>
+            <p className="text-lg font-medium text-lime12">Pontuação enviada</p>
           )}
           <Button variant="outline" onClick={() => restartGameStats()}>
             Tentar novamente

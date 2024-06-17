@@ -79,7 +79,7 @@ const Profile = () => {
           <div className="container-width mt-11 py-3">
             <div className="flex justify-between">
               <h2
-                className={`${poppins.className} text-3xl font-semibold text-lime12`}
+                className={`${poppins.className} text-3xl font-medium text-lime12`}
               >
                 Olá, @{firstName}!
               </h2>

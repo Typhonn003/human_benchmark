@@ -14,9 +14,7 @@ const InfoCard = ({ icon, title, description }: InfoCardProps) => {
         {icon}
       </div>
       <div>
-        <h2
-          className={`${poppins.className} text-xl font-medium laptop:text-2xl`}
-        >
+        <h2 className={`${poppins.className} text-xl laptop:text-2xl`}>
           {title}
         </h2>
         <p className="text-justify text-base text-lime11 desktop:text-lg">
