@@ -4,6 +4,7 @@ import { useGameStatusStore, useUserStore } from "@/store";
 
 import { EditProfile, gamesData, gamesInfo, GameCard } from "@/components";
 import { FaArrowRotateRight } from "react-icons/fa6";
+import { inter, poppins } from "@/fonts";
 
 interface GameStats {
   name: string;
@@ -73,11 +74,13 @@ const Profile = () => {
       : [];
 
     return (
-      <main className="flex flex-col gap-4">
+      <main className={`${inter.className} flex flex-col gap-4`}>
         <section className="bg-lime3">
           <div className="container-width mt-11 py-3">
             <div className="flex justify-between">
-              <h2 className="text-3xl font-semibold text-lime12">
+              <h2
+                className={`${poppins.className} text-3xl font-semibold text-lime12`}
+              >
                 Olá, @{firstName}!
               </h2>
               <EditProfile name={user.name} id={user.id} />
@@ -124,7 +127,9 @@ const Profile = () => {
                 )
               ) : (
                 <div className="rounded-md border border-lime6 bg-lime3 p-2">
-                  <h3 className="text-center text-lg text-lime12">
+                  <h3
+                    className={`${poppins.className} text-center text-lg text-lime12`}
+                  >
                     Nenhuma pontuação registrada
                   </h3>
                 </div>

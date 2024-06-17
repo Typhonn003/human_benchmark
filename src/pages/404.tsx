@@ -1,8 +1,9 @@
 import { useRouter } from "next/router";
-
-import { Button } from "@/components";
 import { useUserStore } from "@/store";
 import { useEffect } from "react";
+
+import { Button } from "@/components";
+import { inter } from "@/fonts";
 
 const Custom404Page = () => {
   const { user, fetch } = useUserStore();
@@ -14,7 +15,9 @@ const Custom404Page = () => {
   }, [fetch]);
 
   return (
-    <main className="screen-height-without-header container-width flex items-center justify-center">
+    <main
+      className={`${inter.className} screen-height-without-header container-width flex items-center justify-center`}
+    >
       <div className="flex max-w-96 flex-col gap-4">
         <h2 className="text-center text-4xl">Que pena...</h2>
         <h3 className="text-center text-lg text-lime11">

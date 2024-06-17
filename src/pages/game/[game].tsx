@@ -1,9 +1,11 @@
-import { useEffect, useState, useCallback } from "react";
-import { useRouter } from "next/router";
-import { useGameStatusStore, useUserStore } from "@/store";
-import { Button, GameCard, gamesData, gamesInfo } from "@/components";
-import api from "@/services/axios";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { useGameStatusStore, useUserStore } from "@/store";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import api from "@/services/axios";
+
+import { Button, GameCard, gamesData, gamesInfo } from "@/components";
+import { inter, poppins } from "@/fonts";
 
 interface IGameInfo {
   name: string;
@@ -74,14 +76,18 @@ const Game = ({ isMobile }: { isMobile: boolean }) => {
 
   if (!gameName || !["arrow", "aim", "reaction"].includes(gameName)) {
     return (
-      <main className="screen-height-without-header flex flex-col items-center justify-evenly tablet:justify-center tablet:gap-4">
-        <h2 className="text-xl font-medium text-lime12 tablet:text-3xl">
-          Jogo não encontrado
-        </h2>
-        <h3 className="text-base font-medium text-lime11 tablet:text-xl">
-          Mas que tal experimentar um desses?
-        </h3>
-        <div className="container-width">
+      <main className={`${inter.className} screen-height-without-header`}>
+        <div className="container-width flex h-full flex-col items-center justify-center tablet:gap-4">
+          <h2
+            className={`${poppins.className} text-center text-xl font-bold text-lime12 tablet:text-3xl`}
+          >
+            Jogo não encontrado
+          </h2>
+          <h3
+            className={`${poppins.className} text-center text-base font-medium text-lime11 tablet:text-xl`}
+          >
+            Mas que tal experimentar um desses?
+          </h3>
           <ul className="flex flex-col gap-4 tablet:grid tablet:grid-cols-2 laptop:grid-cols-3">
             {gamesInfo.map(({ icon, name, description, title }) => (
               <GameCard
@@ -101,7 +107,9 @@ const Game = ({ isMobile }: { isMobile: boolean }) => {
   const { gameComponent, icon, name, instructions } = gamesData[gameName];
 
   return (
-    <main className="screen-height-without-header flex items-center justify-center bg-lime3">
+    <main
+      className={`${inter.className} screen-height-without-header flex items-center justify-center bg-lime3`}
+    >
       {isMobile ? (
         <div className="container-width max-w-72 rounded-md bg-lime9 p-6">
           <p className="text-center text-lg font-semibold text-lime12">
