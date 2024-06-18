@@ -5,6 +5,8 @@ import api from "@/services/axios";
 import { setCookie } from "nookies";
 import { loginSchema } from "@/schemas";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import axios from "axios";
 
 import {
   Button,
@@ -19,6 +21,8 @@ import {
 
 const LoginForm = () => {
   const router = useRouter();
+  const [error, setError] = useState<null | string>(null);
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -27,7 +31,7 @@ const LoginForm = () => {
     },
   });
 
-  const login = async (loginData: z.infer<typeof loginSchema>) => {
+  const onSubmit = async (loginData: z.infer<typeof loginSchema>) => {
     try {
       const {
         data: { token },
@@ -39,13 +43,20 @@ const LoginForm = () => {
 
       router.push("/profile");
     } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 403) {
+        setError("Email ou senha incorretos");
+      }
+
       console.error(error);
     }
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(login)} className="flex flex-col gap-3">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-3"
+      >
         <FormField
           control={form.control}
           name="email"
@@ -55,7 +66,6 @@ const LoginForm = () => {
               <FormControl>
                 <Input placeholder="Digite seu email" {...field} />
               </FormControl>
-              <FormMessage />
             </FormItem>
           )}
         />
@@ -72,10 +82,10 @@ const LoginForm = () => {
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
             </FormItem>
           )}
         />
+        {error && <FormMessage>{error}</FormMessage>}
         <Button type="submit">Entrar</Button>
       </form>
     </Form>

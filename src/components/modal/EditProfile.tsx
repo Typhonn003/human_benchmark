@@ -70,7 +70,7 @@ const EditProfile = ({ name, id }: { name: string; id: string }) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="px-2">
+        <Button className="px-2" variant="default" size="icon">
           <FaGear className="h-6 w-6" />
         </Button>
       </DialogTrigger>
@@ -99,9 +99,13 @@ const EditProfile = ({ name, id }: { name: string; id: string }) => {
                 </FormItem>
               )}
             />
-            <div className="flex flex-col gap-2">
+            <div className="bg-red flex flex-col gap-2 tablet:flex-row-reverse tablet:self-end">
               <Button type="submit">Salvar mudanças</Button>
-              <Button variant="outline" type="button" onClick={handleDelete}>
+              <Button
+                variant="destructive"
+                type="button"
+                onClick={handleDelete}
+              >
                 {confirmDelete ? "Clique para confirmar" : "Desativar conta"}
               </Button>
             </div>
