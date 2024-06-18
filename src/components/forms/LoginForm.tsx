@@ -42,7 +42,7 @@ const LoginForm = () => {
       router.push("/profile");
     } catch (error) {
       console.error(error);
-      setError("Usuário ou senha incorretos");
+      setError("Email ou senha incorretos");
     }
   };
 
