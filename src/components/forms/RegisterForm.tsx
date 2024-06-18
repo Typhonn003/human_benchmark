@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import api from "@/services/axios";
 import { registerSchema } from "@/schemas";
 import { useState } from "react";
+import axios from "axios";
 
 import {
   Button,
@@ -25,6 +26,7 @@ import { inter, poppins } from "@/fonts";
 
 const RegisterForm = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [error, setError] = useState<null | string>(null);
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -39,10 +41,14 @@ const RegisterForm = () => {
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
     try {
       await api.post("/users/", values);
+      setError(null);
       setIsOpen(false);
     } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 409) {
+        setError("Email já cadastrado");
+      }
+
       console.error(error);
-    } finally {
     }
   };
 
@@ -97,6 +103,11 @@ const RegisterForm = () => {
                       <Input placeholder="Digite seu email" {...field} />
                     </FormControl>
                     <FormMessage />
+                    {error && (
+                      <p className="text-[0.8rem] font-medium text-destructive">
+                        {error}
+                      </p>
+                    )}
                   </FormItem>
                 )}
               />
