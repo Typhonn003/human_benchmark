@@ -5,6 +5,7 @@ import api from "@/services/axios";
 import { setCookie } from "nookies";
 import { loginSchema } from "@/schemas";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 import {
   Button,
@@ -19,6 +20,7 @@ import {
 
 const LoginForm = () => {
   const router = useRouter();
+  const [error, setError] = useState<null | string>(null);
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -40,6 +42,7 @@ const LoginForm = () => {
       router.push("/profile");
     } catch (error) {
       console.error(error);
+      setError("Usuário ou senha incorretos");
     }
   };
 
@@ -55,7 +58,6 @@ const LoginForm = () => {
               <FormControl>
                 <Input placeholder="Digite seu email" {...field} />
               </FormControl>
-              <FormMessage />
             </FormItem>
           )}
         />
@@ -72,10 +74,10 @@ const LoginForm = () => {
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
             </FormItem>
           )}
         />
+        {error && <FormMessage>{error}</FormMessage>}
         <Button type="submit">Entrar</Button>
       </form>
     </Form>
