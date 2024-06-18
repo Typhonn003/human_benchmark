@@ -8,9 +8,11 @@ export const registerSchema = z
       .max(50, "Tamanho máximo de 50 caracteres"),
     email: z
       .string()
-      .min(2)
+      .min(10, "Precisa ter pelo menos 10 caracteres")
       .max(50, "Tamanho máximo de 50 caracteres")
-      .email("Precisa ser um email válido"),
+      .email({
+        message: "Email inválido",
+      }),
     password: z
       .string()
       .min(8, "Tamanho mínimo de 8 caracteres")
