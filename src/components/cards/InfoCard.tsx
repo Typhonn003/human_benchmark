@@ -1,27 +1,61 @@
 import { poppins } from "@/fonts";
-import { ReactNode } from "react";
 
 interface InfoCardProps {
-  icon: ReactNode;
-  title: string;
-  description: string;
+  name: string;
+  icon: JSX.Element;
+  maxPoints: number;
+  playCount: number;
+  averagePoints: number;
 }
 
-const InfoCard = ({ icon, title, description }: InfoCardProps) => {
+const InfoCard = ({
+  name,
+  icon,
+  maxPoints,
+  playCount,
+  averagePoints,
+}: InfoCardProps) => {
+  const handleName = (name: string) => {
+    switch (name) {
+      case "aim":
+        return "Precisão";
+      case "arrow":
+        return "Direção";
+      case "reaction":
+        return "Reação";
+    }
+  };
+
   return (
-    <div className="flex w-full max-w-96 items-center justify-between gap-4">
-      <div className="flex min-h-24 min-w-24 items-center justify-center rounded-md bg-lime9 text-6xl">
-        {icon}
-      </div>
-      <div>
-        <h2 className={`${poppins.className} text-xl laptop:text-2xl`}>
-          {title}
+    <li
+      className="group flex h-44 w-full cursor-default flex-col items-center justify-evenly rounded-md border border-lime6 bg-gradient-to-b from-lime3 to-lime5 shadow-md hover:border-lime8"
+      key={name}
+    >
+      <div className="flex w-full items-center justify-evenly">
+        <div className="text-6xl group-hover:text-lime11">{icon}</div>
+        <h2 className={`${poppins.className} text-xl font-medium`}>
+          {handleName(name)?.toUpperCase()}
         </h2>
-        <p className="text-justify text-base text-lime11 desktop:text-lg">
-          {description}
-        </p>
       </div>
-    </div>
+      <div className="align-center flex w-full justify-evenly text-center">
+        <div className="flex flex-col">
+          <p className="font-medium">Recorde</p>
+          <span className="group-hover:text-lime11">{maxPoints}</span>
+        </div>
+        <div className="flex flex-col">
+          <p className="font-medium">Já jogado</p>
+          <span className="group-hover:text-lime11">
+            {playCount} {playCount === 1 ? "vez" : "vezes"}
+          </span>
+        </div>
+        <div className="flex flex-col">
+          <p className="font-medium">Média</p>
+          <span className="group-hover:text-lime11">
+            {averagePoints.toFixed(2)}
+          </span>
+        </div>
+      </div>
+    </li>
   );
 };
 
