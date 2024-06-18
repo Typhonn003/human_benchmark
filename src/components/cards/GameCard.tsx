@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { useRouter } from "next/router";
+import { poppins } from "@/fonts";
 
 interface GameCardProps {
   icon: ReactNode;
@@ -19,7 +20,11 @@ const GameCard = ({ icon, title, description, name }: GameCardProps) => {
       <div className="text-8xl group-hover:text-lime11">{icon}</div>
       <div className="flex w-3/5 flex-col">
         <div>
-          <h2 className="text-center text-2xl font-medium">{title}</h2>
+          <h2
+            className={`${poppins.className} text-center text-2xl font-medium`}
+          >
+            {title}
+          </h2>
           <p className="text-center text-lime11">{description}</p>
         </div>
       </div>

@@ -14,6 +14,7 @@ import {
   RegisterForm,
   gamesInfo,
 } from "@/components";
+import { inter, poppins } from "@/fonts";
 
 const Home = () => {
   const router = useRouter();
@@ -42,14 +43,18 @@ const Home = () => {
   }
 
   return (
-    <main className="flex flex-col">
+    <main className={`${inter.className} flex flex-col`}>
       <section className="screen-height-without-header flex items-center bg-lime3 tablet:h-auto tablet:py-10">
         <div className="container-width desktop:gap-38 flex max-w-96 flex-col items-center gap-5 tablet:max-w-full tablet:flex-row ">
           <div className="relative flex w-full flex-col items-center gap-4 tablet:w-2/4 laptop:items-start laptop:gap-8 desktop:w-3/5">
-            <h1 className="z-10 text-center text-3xl font-semibold smartphone:text-[2.3rem] tablet:text-[2rem] laptop:text-5xl  desktop:text-6xl">
+            <h1
+              className={`${poppins.className} font- z-10 text-center text-3xl font-medium smartphone:text-[2.3rem] tablet:text-[2rem] laptop:text-5xl  desktop:text-6xl`}
+            >
               Human Benchmark
             </h1>
-            <div className="z-10 w-72 text-xl font-medium text-lime11 smartphone:block laptop:w-full laptop:text-3xl desktop:text-4xl">
+            <div
+              className={`${poppins.className} z-10 w-72 text-xl text-lime11 smartphone:block laptop:w-full laptop:text-3xl desktop:text-4xl`}
+            >
               <p>Se desafie.</p>
               <p className="text-center">Aprimore suas habilidades.</p>
               <p className="text-right">Supere seus limites.</p>
@@ -68,7 +73,9 @@ const Home = () => {
           </div>
           <Card className="z-10 flex w-full flex-col bg-lime2 tablet:w-2/4 desktop:w-2/5">
             <CardHeader>
-              <CardTitle className="font-bold">Entrar</CardTitle>
+              <CardTitle className={`${poppins.className} font-medium`}>
+                Entrar
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <LoginForm />

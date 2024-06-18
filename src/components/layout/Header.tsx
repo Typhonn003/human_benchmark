@@ -4,6 +4,7 @@ import { destroyCookie } from "nookies";
 import { useRouter } from "next/router";
 
 import { Button } from "@/components";
+import { inter, poppins } from "@/fonts";
 
 const Header = () => {
   const { user, destroyUser } = useUserStore();
@@ -15,10 +16,12 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 z-20 w-full bg-lime9">
+    <header className={`${inter.className} fixed top-0 z-20 w-full bg-lime9`}>
       <div className="container-width mx-auto flex items-center justify-between py-2">
         <Link href="/">
-          <h1 className="text-lg font-medium">Human Benchmark</h1>
+          <h1 className={`${poppins.className} text-lg font-medium`}>
+            Human Benchmark
+          </h1>
         </Link>
         {user ? (
           <ul className="flex gap-2">

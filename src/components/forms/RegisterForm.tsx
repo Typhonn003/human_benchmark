@@ -21,6 +21,7 @@ import {
   FormMessage,
   Input,
 } from "@/components";
+import { inter, poppins } from "@/fonts";
 
 const RegisterForm = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -57,9 +58,13 @@ const RegisterForm = () => {
           Criar nova conta
         </Button>
       </DialogTrigger>
-      <DialogContent className="w-[90%] rounded-md bg-lime2">
+      <DialogContent
+        className={`${inter.className} w-[90%] rounded-md bg-lime2`}
+      >
         <DialogHeader className="items-start">
-          <DialogTitle className="font-bold">Cadastre-se</DialogTitle>
+          <DialogTitle className={`${poppins.className} font-medium`}>
+            Cadastre-se
+          </DialogTitle>
           <DialogDescription>Rápido e fácil.</DialogDescription>
         </DialogHeader>
         <Form {...form}>

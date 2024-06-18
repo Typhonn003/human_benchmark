@@ -1,3 +1,4 @@
+import { poppins } from "@/fonts";
 import { ReactNode } from "react";
 
 interface InfoCardProps {
@@ -13,7 +14,9 @@ const InfoCard = ({ icon, title, description }: InfoCardProps) => {
         {icon}
       </div>
       <div>
-        <h2 className="text-xl font-medium laptop:text-2xl">{title}</h2>
+        <h2 className={`${poppins.className} text-xl laptop:text-2xl`}>
+          {title}
+        </h2>
         <p className="text-justify text-base text-lime11 desktop:text-lg">
           {description}
         </p>
