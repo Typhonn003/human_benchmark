@@ -12,6 +12,8 @@ const buttonVariants = cva(
         outline:
           "rounded-md border border-lime6 bg-lime2 px-6 text-lime11 hover:border-lime7 hover:bg-lime2",
         link: "text-primary underline-offset-4 hover:underline",
+        delete:
+          "rounded-md border border-red-600 bg-red-100 px-6 text-red-900 hover:bg-red-600 hover:text-red-50",
       },
       size: {
         default: "h-9 px-4 py-2",
