@@ -116,10 +116,13 @@ const Game = ({ isMobile }: { isMobile: boolean }) => {
         className={`${inter.className} screen-height-without-header flex items-center justify-center bg-lime3`}
       >
         {isMobile ? (
-          <div className="container-width max-w-72 rounded-md bg-lime9 p-6">
+          <div className="container-width flex max-w-72 flex-col gap-2 rounded-md bg-lime9 p-6">
             <p className="text-center text-lg font-medium text-lime12">
               Não é possível jogar em dispositivos moveis
             </p>
+            <Button variant="outline" onClick={() => router.push("/")}>
+              Ir para tela inicial
+            </Button>
           </div>
         ) : !gameStart ? (
           <div className="flex h-[500px] w-[500px] flex-col items-center justify-center gap-2 rounded-md bg-lime9">
