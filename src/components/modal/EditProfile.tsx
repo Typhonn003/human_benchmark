@@ -70,7 +70,12 @@ const EditProfile = ({ name, id }: { name: string; id: string }) => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="px-2" variant="default" size="icon">
+        <Button
+          className="px-2"
+          variant="default"
+          size="icon"
+          aria-label="Botão para editar ou desativar o perfil"
+        >
           <FaGear className="h-6 w-6" />
         </Button>
       </DialogTrigger>

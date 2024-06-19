@@ -10,6 +10,7 @@ import {
   InfoCard,
   MetaTags,
 } from "@/components";
+import Link from "next/link";
 import { FaArrowRotateRight } from "react-icons/fa6";
 import { inter, poppins } from "@/fonts";
 
@@ -130,13 +131,14 @@ const Profile = () => {
               <h2 className="mb-4 text-xl font-medium">Lista de jogos</h2>
               <ul className="flex flex-col gap-4">
                 {gamesInfo.map(({ icon, name, description, title }) => (
-                  <GameCard
-                    key={name}
-                    icon={icon}
-                    title={title}
-                    name={name}
-                    description={description}
-                  />
+                  <Link key={name} href={`/game/${name}`} target="_self">
+                    <GameCard
+                      icon={icon}
+                      title={title}
+                      name={name}
+                      description={description}
+                    />
+                  </Link>
                 ))}
               </ul>
             </section>
