@@ -49,13 +49,20 @@ const calculateGameStats = (userPoints: UserPoint[]): GameStats[] => {
 
 const Profile = () => {
   const { user, loadingData, fetch } = useUserStore();
-  const { restartGameStats } = useGameStatusStore();
+  const restartGameStats = useGameStatusStore(
+    (state) => state.restartGameStats,
+  );
   const router = useRouter();
 
   useEffect(() => {
+    if (!user) {
+      fetch();
+    }
+  }, [fetch, user]);
+
+  useEffect(() => {
     restartGameStats();
-    fetch();
-  }, [fetch, restartGameStats]);
+  }, [restartGameStats]);
 
   if (loadingData) {
     return (
@@ -147,6 +154,8 @@ const Profile = () => {
       </>
     );
   }
+
+  return null;
 };
 
 export default Profile;

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useUserStore } from "@/store";
+import { useGameStatusStore, useUserStore } from "@/store";
 import { useEffect } from "react";
 
 import { Button, MetaTags } from "@/components";
@@ -7,12 +7,21 @@ import { inter, poppins } from "@/fonts";
 
 const Custom404Page = () => {
   const { user, fetch } = useUserStore();
+  const restartGameStats = useGameStatusStore(
+    (state) => state.restartGameStats,
+  );
   const redirectPath = user ? "/profile" : "/";
   const router = useRouter();
 
   useEffect(() => {
-    fetch();
-  }, [fetch]);
+    if (!user) {
+      fetch();
+    }
+  }, [fetch, user]);
+
+  useEffect(() => {
+    restartGameStats();
+  }, [restartGameStats]);
 
   return (
     <>

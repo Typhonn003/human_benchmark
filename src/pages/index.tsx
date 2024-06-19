@@ -26,9 +26,14 @@ const Home = () => {
   const { user, fetch } = useUserStore();
 
   useEffect(() => {
+    if (!user) {
+      fetch();
+    }
+  }, [fetch, user]);
+
+  useEffect(() => {
     restartGameStats();
-    fetch();
-  }, [fetch, restartGameStats]);
+  }, [restartGameStats]);
 
   const goPlay = () => {
     const names = gamesInfo.map((element) => {

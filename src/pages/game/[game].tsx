@@ -30,6 +30,12 @@ const Game = ({ isMobile }: { isMobile: boolean }) => {
   const [gameId, setGameId] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!user) {
+      fetch();
+    }
+  }, [fetch, user]);
+
+  useEffect(() => {
     const fetchGameId = async (gameName: string) => {
       try {
         const response = await api.get("/games");
@@ -70,10 +76,6 @@ const Game = ({ isMobile }: { isMobile: boolean }) => {
       sendGameScore(user.id, gameId, gameScore);
     }
   }, [gameFinished, gameId, gameScore, setGameFinished, user]);
-
-  useEffect(() => {
-    fetch();
-  }, [fetch]);
 
   if (!gameName || !["arrow", "aim", "reaction"].includes(gameName)) {
     return (
