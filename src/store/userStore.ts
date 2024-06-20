@@ -35,6 +35,8 @@ const useUserStore = create<useUserStoreProps>((set) => ({
       } finally {
         set({ loadingData: false });
       }
+    } else {
+      set({ user: null });
     }
   },
 }));

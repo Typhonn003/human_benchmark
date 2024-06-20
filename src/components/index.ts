@@ -14,3 +14,4 @@ export * from "./ui/Dialog";
 export * from "./ui/Form";
 export * from "./ui/Input";
 export * from "./ui/Label";
+export * from "./metatags/MetaTags";

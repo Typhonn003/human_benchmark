@@ -8,7 +8,9 @@ import {
   gamesInfo,
   GameCard,
   InfoCard,
+  MetaTags,
 } from "@/components";
+import Link from "next/link";
 import { FaArrowRotateRight } from "react-icons/fa6";
 import { inter, poppins } from "@/fonts";
 
@@ -47,13 +49,20 @@ const calculateGameStats = (userPoints: UserPoint[]): GameStats[] => {
 
 const Profile = () => {
   const { user, loadingData, fetch } = useUserStore();
-  const { restartGameStats } = useGameStatusStore();
+  const restartGameStats = useGameStatusStore(
+    (state) => state.restartGameStats,
+  );
   const router = useRouter();
 
   useEffect(() => {
+    if (!user) {
+      fetch();
+    }
+  }, [fetch, user]);
+
+  useEffect(() => {
     restartGameStats();
-    fetch();
-  }, [fetch, restartGameStats]);
+  }, [restartGameStats]);
 
   if (loadingData) {
     return (
@@ -80,67 +89,73 @@ const Profile = () => {
       : [];
 
     return (
-      <main className={`${inter.className} flex flex-col gap-4`}>
-        <section className="bg-lime3">
-          <div className="container-width mt-11 py-3">
-            <div className="flex justify-between">
-              <h2
-                className={`${poppins.className} text-3xl font-medium text-lime12`}
-              >
-                Olá, @{firstName}!
-              </h2>
-              <EditProfile name={user.name} id={user.id} />
+      <>
+        <MetaTags pageName="Perfil" />
+        <main className={`${inter.className} flex flex-col gap-4`}>
+          <section className="bg-lime3">
+            <div className="container-width mt-11 py-3">
+              <div className="flex justify-between">
+                <h2
+                  className={`${poppins.className} text-3xl font-medium text-lime12`}
+                >
+                  Olá, @{firstName}!
+                </h2>
+                <EditProfile name={user.name} id={user.id} />
+              </div>
+              <p className="text-lg text-lime11">{user.email}</p>
             </div>
-            <p className="text-lg text-lime11">{user.email}</p>
+          </section>
+          <div className="container-width flex flex-col gap-4 tablet:flex-row">
+            <section className="tablet:w-5/12">
+              <h2 className="mb-4 text-xl font-medium">Pontuação</h2>
+              <ul className="flex flex-col gap-4">
+                {gameStats.length > 0 ? (
+                  gameStats.map(
+                    ({ name, averagePoints, maxPoints, playCount }) =>
+                      gamesData[name] && (
+                        <InfoCard
+                          key={name}
+                          name={name}
+                          icon={gamesData[name].icon}
+                          maxPoints={maxPoints}
+                          playCount={playCount}
+                          averagePoints={averagePoints}
+                        />
+                      ),
+                  )
+                ) : (
+                  <div className="rounded-md border border-lime6 bg-lime3 p-2">
+                    <h3
+                      className={`${poppins.className} text-center text-lg text-lime12`}
+                    >
+                      Nenhuma pontuação registrada
+                    </h3>
+                  </div>
+                )}
+              </ul>
+            </section>
+            <section className="pb-4 tablet:w-7/12">
+              <h2 className="mb-4 text-xl font-medium">Lista de jogos</h2>
+              <ul className="flex flex-col gap-4">
+                {gamesInfo.map(({ icon, name, description, title }) => (
+                  <Link key={name} href={`/game/${name}`} target="_self">
+                    <GameCard
+                      icon={icon}
+                      title={title}
+                      name={name}
+                      description={description}
+                    />
+                  </Link>
+                ))}
+              </ul>
+            </section>
           </div>
-        </section>
-        <div className="container-width flex flex-col gap-4 tablet:flex-row">
-          <section className="tablet:w-5/12">
-            <h2 className="mb-4 text-xl font-medium">Pontuação</h2>
-            <ul className="flex flex-col gap-4">
-              {gameStats.length > 0 ? (
-                gameStats.map(
-                  ({ name, averagePoints, maxPoints, playCount }) =>
-                    gamesData[name] && (
-                      <InfoCard
-                        key={name}
-                        name={name}
-                        icon={gamesData[name].icon}
-                        maxPoints={maxPoints}
-                        playCount={playCount}
-                        averagePoints={averagePoints}
-                      />
-                    ),
-                )
-              ) : (
-                <div className="rounded-md border border-lime6 bg-lime3 p-2">
-                  <h3
-                    className={`${poppins.className} text-center text-lg text-lime12`}
-                  >
-                    Nenhuma pontuação registrada
-                  </h3>
-                </div>
-              )}
-            </ul>
-          </section>
-          <section className="pb-4 tablet:w-7/12">
-            <h2 className="mb-4 text-xl font-medium">Lista de jogos</h2>
-            <ul className="flex flex-col gap-4">
-              {gamesInfo.map(({ icon, name, description, title }) => (
-                <GameCard
-                  key={name}
-                  icon={icon}
-                  title={title}
-                  name={name}
-                  description={description}
-                />
-              ))}
-            </ul>
-          </section>
-        </div>
-      </main>
+        </main>
+      </>
     );
   }
+
+  return null;
 };
 
 export default Profile;

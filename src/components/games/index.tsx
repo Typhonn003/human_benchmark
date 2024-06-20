@@ -53,7 +53,7 @@ const gamesInfo: GamesInfo[] = [
   {
     icon: <GiBottomRight3DArrow />,
     name: "arrow",
-    description: "Você é bom nas setinhas?",
+    description: "Acerte a direção da seta!",
     title: "Teste de Direção",
   },
   {
@@ -65,7 +65,7 @@ const gamesInfo: GamesInfo[] = [
   {
     icon: <GiLightningTear />,
     name: "reaction",
-    description: "Seus reflexos estão em dia?",
+    description: "Desafie seu tempo de reação!",
     title: "Teste de Reação",
   },
 ];
