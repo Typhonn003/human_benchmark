@@ -1,8 +1,6 @@
 import { create } from "zustand";
 
 interface useGameStatusStoreProps {
-  gameId: string | null;
-  setGameId: (value: string | null) => void;
   gameStart: boolean;
   setGameStart: (value: boolean) => void;
   gameFinished: boolean;
@@ -15,8 +13,6 @@ interface useGameStatusStoreProps {
 }
 
 const useGameStatusStore = create<useGameStatusStoreProps>((set) => ({
-  gameId: null,
-  setGameId: (value) => set(() => ({ gameId: value })),
   gameStart: false,
   setGameStart: (value) => set(() => ({ gameStart: value })),
   gameFinished: false,

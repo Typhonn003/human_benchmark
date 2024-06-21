@@ -4,7 +4,7 @@ const MetaTags = ({ pageName }: { pageName: string }) => {
   return (
     <Head>
       <title>{pageName}</title>
-      <link rel="shortcut icon" href="/favicon.ico" />
+      <link rel="shortcut icon" href="/image/favicon.ico" />
       <meta
         name="description"
         content="Teste suas habilidades em nosso site de Human Benchmark! Jogue três jogos divertidos e desafie seus reflexos e precisão. Usuários logados podem salvar suas pontuações e acompanhar seu progresso."

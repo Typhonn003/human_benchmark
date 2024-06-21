@@ -29,7 +29,7 @@ import {
 const EditProfile = ({ name, id }: { name: string; id: string }) => {
   const { user, setUser } = useUserStore();
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [infoChanged, setInfoChanged] = useState(false);
   const router = useRouter();
 
   const form = useForm<TEditProfileSchema>({
@@ -44,9 +44,13 @@ const EditProfile = ({ name, id }: { name: string; id: string }) => {
       const response = await api.patch(`/users/${id}`, values);
       const data: IUserUpdate = response.data;
       setUser({ ...data, user_points: user!.user_points });
-      setIsOpen(false);
+      setInfoChanged(true);
     } catch (error) {
       console.error(error);
+    } finally {
+      setTimeout(() => {
+        setInfoChanged(false);
+      }, 3000);
     }
   };
 
@@ -68,7 +72,7 @@ const EditProfile = ({ name, id }: { name: string; id: string }) => {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog>
       <DialogTrigger asChild>
         <Button
           className="px-2"
@@ -101,11 +105,18 @@ const EditProfile = ({ name, id }: { name: string; id: string }) => {
                     <Input placeholder="Digite seu nome" {...field} />
                   </FormControl>
                   <FormMessage />
+                  {infoChanged && (
+                    <p className="text-sm font-medium text-lime11">
+                      Informações alteradas
+                    </p>
+                  )}
                 </FormItem>
               )}
             />
             <div className="bg-red flex flex-col gap-2 tablet:flex-row-reverse tablet:self-end">
-              <Button type="submit">Salvar mudanças</Button>
+              <Button type="submit" disabled={infoChanged}>
+                Salvar mudanças
+              </Button>
               <Button
                 variant="destructive"
                 type="button"
