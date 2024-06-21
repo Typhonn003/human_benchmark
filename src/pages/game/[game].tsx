@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import api from "@/services/axios";
 
 import { Button, GameCard, MetaTags, gamesData, gamesInfo } from "@/components";
-import Link from "next/link";
 import { inter, poppins } from "@/fonts";
 
 interface IGameInfo {
@@ -105,14 +104,13 @@ const Game = ({ isMobile }: { isMobile: boolean }) => {
             </h3>
             <ul className="flex w-full flex-col gap-4 tablet:grid tablet:grid-cols-2 laptop:grid-cols-3">
               {gamesInfo.map(({ icon, name, description, title }) => (
-                <Link key={name} href={`/game/${name}`} target="_self">
-                  <GameCard
-                    icon={icon}
-                    title={title}
-                    name={name}
-                    description={description}
-                  />
-                </Link>
+                <GameCard
+                  key={name}
+                  icon={icon}
+                  title={title}
+                  name={name}
+                  description={description}
+                />
               ))}
             </ul>
           </div>
