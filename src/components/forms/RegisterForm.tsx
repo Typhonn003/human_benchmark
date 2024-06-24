@@ -43,12 +43,18 @@ const RegisterForm = () => {
       await api.post("/users/", values);
       setError(null);
       setIsOpen(false);
+
+      form.reset();
     } catch (error) {
       if (axios.isAxiosError(error) && error.response?.status === 409) {
         setError("Email já cadastrado");
       }
 
       console.error(error);
+    } finally {
+      setTimeout(() => {
+        setError(null);
+      }, 4000);
     }
   };
 
