@@ -30,42 +30,22 @@ npm run dev
 
 ## Design
 
-![Home](./docSrc/home.png)
-![Register](./docSrc/register.png)
-![Perfil](./docSrc/perfil.png)
-![Update](./docSrc/update.png)
+![Home](./public/docSrc/home.png)
+![Register](./public/docSrc/register.png)
+![Perfil](./public/docSrc/perfil.png)
+![Update](./public/docSrc/update.png)
 
 ## 404
 
 Caso a url esteja errada, as seguintes opções podem aparecer:
-![404 normal](./docSrc/404normal.png)
-![404 games](./docSrc/404games.png)
+![404 normal](./public/docSrc/404normal.png)
+![404 games](./public/docSrc/404games.png)
 
 ## Jogos
 
 Os jogos foram pensados para serem jogados apenas no desktop, utilizando teclado e mouse.
 
-![Mobile](./docSrc/mobile.png)
-
-Segue abaixo uma amostra dos jogos:
-
-### Direção
-
-<video width="320" height="240" controls>
-  <source src="./docSrc/arrow.mp4" type="video/mp4">
-</video>
-
-### Precisão
-
-<video width="320" height="240" controls>
-  <source src="./docSrc/aim.mp4" type="video/mp4">
-</video>
-
-### Reação
-
-<video width="320" height="240" controls>
-  <source src="./docSrc/reaction.mp4" type="video/mp4">
-</video>
+![Mobile](./public/docSrc/mobile.png)
 
 ## Back-End
 

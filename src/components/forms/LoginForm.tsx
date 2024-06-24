@@ -48,6 +48,10 @@ const LoginForm = () => {
       }
 
       console.error(error);
+    } finally {
+      setTimeout(() => {
+        setError(null);
+      }, 4000);
     }
   };
 
